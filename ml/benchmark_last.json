@@ -1,0 +1,74 @@
+{
+  "torch": "torch 2.7.0+cpu cuda=False",
+  "gpu_fps": null,
+  "gpu_note": "torch is CPU-only here, GPU FPS not measured",
+  "yolo_cpu": {
+    "frames": 39,
+    "seconds": 2.8301,
+    "fps": 13.78,
+    "detections": 0,
+    "device_note": "ultralytics device auto, CPU torch build",
+    "note": "Frames are synthetic drawings. Detection count is not clip accuracy."
+  },
+  "yolo_error": null,
+  "dry_pipeline": {
+    "frames": 16,
+    "seconds": 0.2496,
+    "fps": 64.104,
+    "events": 1,
+    "detector": "geometric",
+    "ocr": "template"
+  },
+  "installed_ocr_without_template": "none",
+  "consensus_vs_single": {
+    "events": 1,
+    "raw_reads": 5,
+    "raw_exact_painted": 0,
+    "raw_exact_synth_plate": 1,
+    "consensus_match_synth_plate": 1,
+    "best_single_match_synth_plate": 0,
+    "consensus_beats_single": true,
+    "painted_variants": {
+      "3": "TSO9AB1234",
+      "7": "TS09A81234",
+      "11": "TS09ABI234"
+    },
+    "true_plate": "TS09AB1234",
+    "events_detail": [
+      {
+        "plate_text": "TS09AB1234",
+        "plate_confidence": 0.9197086763381958,
+        "best_single_raw": "TSO9ABI234",
+        "raw_reads": [
+          {
+            "frame_idx": 3,
+            "text": "TS09AB1234",
+            "conf": 0.9197003602981567
+          },
+          {
+            "frame_idx": 7,
+            "text": "TSO9A81234",
+            "conf": 0.9192378878593445
+          },
+          {
+            "frame_idx": 11,
+            "text": "TSO9ABI234",
+            "conf": 0.9221781015396118
+          },
+          {
+            "frame_idx": 0,
+            "text": "TSO9AB1234",
+            "conf": 0.918713515996933
+          },
+          {
+            "frame_idx": 1,
+            "text": "TSO9AB1234",
+            "conf": 0.918713515996933
+          }
+        ],
+        "format_valid": true
+      }
+    ],
+    "note": "Counts are from this dry synthetic run only. No sample clips, so clip OCR was not measured."
+  }
+}

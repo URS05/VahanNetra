@@ -8,7 +8,20 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Iterator
 
-from config import DEFAULT_FPS, FRAME_STRIDE, WEBCAM_MAX_FRAMES
+from config import (
+    DEFAULT_FPS,
+    DRY_RUN_SOURCE,
+    FRAME_STRIDE,
+    SYNTH_CHAR_STEP,
+    SYNTH_FONT_SCALE,
+    SYNTH_FONT_THICK,
+    SYNTH_FRAME_TEXT,
+    SYNTH_FRAMES,
+    SYNTH_H,
+    SYNTH_PLATE,
+    SYNTH_W,
+    WEBCAM_MAX_FRAMES,
+)
 
 log = logging.getLogger("ml.ingest")
 
@@ -56,6 +69,7 @@ def iter_frames(
     camera_id: str,
     clip_start: str | None = None,
     frame_stride: int | None = None,
+    max_frames: int | None = None,
 ) -> Iterator[FramePacket]:
     """Yield frames. camera_id is logged only; timestamps start at clip_start."""
     stride = frame_stride if frame_stride is not None else FRAME_STRIDE
@@ -91,6 +105,8 @@ def iter_frames(
                     path=str(video),
                 )
                 kept += 1
+                if max_frames and kept >= max_frames:
+                    break
             idx += 1
     except Exception as exc:
         log.error("ingest stopped after frame %s: %s", idx, exc)
@@ -103,3 +119,69 @@ def video_exists(video: str) -> bool:
     if video.isdigit():
         return True
     return Path(video).is_file()
+
+
+def synth_text_for_frame(frame_idx: int) -> str:
+    return SYNTH_FRAME_TEXT.get(frame_idx, SYNTH_PLATE)
+
+
+def _paint_synthetic(cv2, np, frame_idx: int, count: int):
+    """Gray vehicle, white plate, black glyphs. Not a photograph."""
+    frame = np.full((SYNTH_H, SYNTH_W, 3), 25, dtype=np.uint8)
+    car_w, car_h = 300, 150
+    span = max(1, count - 1)
+    x = 40 + int((SYNTH_W - car_w - 80) * (frame_idx / span))
+    y = 210
+    cv2.rectangle(frame, (x, y), (x + car_w, y + car_h), (170, 170, 165), -1)
+    text = synth_text_for_frame(frame_idx)
+    plate_w = 16 + SYNTH_CHAR_STEP * max(1, len(text))
+    plate_h = 52
+    px = x + 28
+    py = y + car_h - plate_h - 16
+    cv2.rectangle(frame, (px, py), (px + plate_w, py + plate_h), (250, 250, 250), -1)
+    baseline = py + 38
+    for i, ch in enumerate(text):
+        cv2.putText(
+            frame,
+            ch,
+            (px + 8 + i * SYNTH_CHAR_STEP, baseline),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            SYNTH_FONT_SCALE,
+            (5, 5, 5),
+            SYNTH_FONT_THICK,
+            cv2.LINE_AA,
+        )
+    return frame
+
+
+def iter_synthetic_frames(
+    camera_id: str,
+    clip_start: str | None = None,
+    count: int | None = None,
+) -> Iterator[FramePacket]:
+    """Dry-run frames when clips are missing. Events from these use source synthetic."""
+    try:
+        import cv2
+        import numpy as np
+    except Exception as exc:
+        log.error("OpenCV missing, cannot build synthetic frames: %s", exc)
+        return
+    n = count if count is not None else SYNTH_FRAMES
+    n = max(1, n)
+    start = parse_clip_start(clip_start)
+    fps = DEFAULT_FPS
+    log.info(
+        "synthetic ingest camera=%s frames=%s source_tier=%s plate=%s",
+        camera_id,
+        n,
+        DRY_RUN_SOURCE,
+        SYNTH_PLATE,
+    )
+    for i in range(n):
+        yield FramePacket(
+            frame=_paint_synthetic(cv2, np, i, n),
+            frame_idx=i,
+            timestamp=start + timedelta(seconds=i / fps),
+            fps=fps,
+            path="synthetic://dry-run",
+        )

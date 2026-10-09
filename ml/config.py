@@ -49,7 +49,31 @@ CROPS_PER_TRACK = 5
 PLATE_WARP_W = 240
 PLATE_WARP_H = 80
 MIN_PLATE_AREA = 400
+MIN_SHARPNESS = 2.0
 BOTTOM_PLATE_FRAC = 0.35  # fallback crop if plate model missing
+PLATE_PAD_PX = 2
+PLATE_ASPECT_MIN = 1.6
+PLATE_ASPECT_MAX = 7.0
+PLATE_BRIGHT_MIN = 175
+PLATE_SEARCH_Y_FRAC = 0.40
+BOTTOM_BAND_MARGIN_FRAC = 0.08
+MIN_BRIGHT_PLATE_AREA = 200
+QUAD_MIN_AREA_FRAC = 0.45
+CANNY_LOW = 40
+CANNY_HIGH = 140
+SHARPNESS_WEIGHT = 1.0
+AREA_WEIGHT = 0.002
+ANGLE_PENALTY = 1.5
+DESKEW_MIN_DEG = 3.0
+GLYPH_W = 24
+GLYPH_H = 40
+
+# Geometric detector used when YOLO is off or the clip is a dry synthetic frame
+MIN_VEHICLE_AREA = 2500
+GEOMETRIC_VEHICLE_THRESH = 70
+MAX_MATCH_PX = 140
+MIN_MOTION_PX = 12
+GEOMETRIC_VEHICLE_TYPE = "other"
 
 # OCR
 OCR_BACKEND = "paddleocr"  # paddleocr | fast_plate_ocr | none
@@ -60,6 +84,7 @@ OCR_USE_GPU = True
 # Consensus
 MIN_PLATE_LEN = 6
 MAX_PLATE_LEN = 13
+# Letter lookalikes rewritten when the plate slot expects a digit.
 CONFUSABLE = {
     "O": "0",
     "I": "1",
@@ -68,6 +93,12 @@ CONFUSABLE = {
     "S": "5",
     "Z": "2",
 }
+# Standard private plate, and Bharat series (2 digits, BH, 4 digits, 1-2 letters).
+PLATE_PATTERNS = (
+    r"^[A-Z]{2}[0-9]{2}[A-Z]{1,3}[0-9]{4}$",
+    r"^[0-9]{2}BH[0-9]{4}[A-Z]{1,2}$",
+)
+TEMPLATE_MIN_SCORE = 0.35
 
 # Emit
 POST_RETRIES = 3
@@ -79,5 +110,22 @@ SKIP_EMPTY_PLATE = True
 # Speed: leave 0 to always emit speed_estimate null
 PIXELS_PER_METER = 0.0
 
-# Benchmark
-BENCH_MAX_FRAMES = 120
+# Benchmark. GPU FPS is left unmeasured when torch has no CUDA.
+BENCH_MAX_FRAMES = 40
+
+# Dry synthetic frames (no sample clips in data/videos). Source tier is synthetic.
+SYNTH_FRAMES = 16
+SYNTH_W = 960
+SYNTH_H = 540
+SYNTH_PLATE = "TS09AB1234"
+SYNTH_FONT_SCALE = 0.85
+SYNTH_FONT_THICK = 2
+SYNTH_CHAR_STEP = 20
+# A few frames paint a confusable character. Keys are frame indexes.
+SYNTH_FRAME_TEXT = {
+    3: "TSO9AB1234",
+    7: "TS09A81234",
+    11: "TS09ABI234",
+}
+DRY_RUN_SOURCE = "synthetic"
+COMPASS = ("N", "NE", "E", "SE", "S", "SW", "W", "NW")
