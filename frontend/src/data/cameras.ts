@@ -1,0 +1,67 @@
+import type { Camera } from "../types";
+
+export const CAMERAS: Camera[] = [
+  {
+    camera_id: "CAM01",
+    name: "Hitech City Junction",
+    lat: 17.450638,
+    lon: 78.382001,
+    heading: 135,
+    lanes: 4,
+    status: "online",
+    snapped_distance_m: 15.03,
+    osm_name: "Cyber Towers Bus Stop / Cyber Towers - Madhapur Main Road",
+    video_file: "data/videos/CAM01.mp4",
+  },
+  {
+    camera_id: "CAM02",
+    name: "Madhapur",
+    lat: 17.44096,
+    lon: 78.391643,
+    heading: 180,
+    lanes: 3,
+    status: "online",
+    snapped_distance_m: 7.65,
+    osm_name: "Madhapur suburb, snapped to Cyber Towers - Madhapur Main Road",
+    video_file: "data/videos/CAM02.mp4",
+  },
+  {
+    camera_id: "CAM03",
+    name: "Kondapur",
+    lat: 17.458785,
+    lon: 78.373051,
+    heading: 270,
+    lanes: 3,
+    status: "online",
+    snapped_distance_m: 0.85,
+    osm_name: "Kondapur suburb node",
+    video_file: "data/videos/CAM03.mp4",
+  },
+  {
+    camera_id: "CAM04",
+    name: "Gachibowli Junction",
+    lat: 17.443465,
+    lon: 78.35224,
+    heading: 225,
+    lanes: 4,
+    status: "online",
+    snapped_distance_m: 0.0,
+    osm_name: "Gachibowli suburb snapped onto nearest drivable road",
+    video_file: "data/videos/CAM04.mp4",
+  },
+  {
+    camera_id: "CAM05",
+    name: "Financial District",
+    lat: 17.421804,
+    lon: 78.337995,
+    heading: 200,
+    lanes: 3,
+    status: "online",
+    snapped_distance_m: 3.21,
+    osm_name: "Nanakramguda, Road No 2",
+    video_file: "data/videos/CAM05.mp4",
+  },
+];
+
+export const cameraById = (id: string): Camera | undefined =>
+  CAMERAS.find((c) => c.camera_id === id);
