@@ -1,0 +1,29 @@
+[
+  {
+    "event_id": "sim-watch-01",
+    "plate_text": "TS09WL9999",
+    "plate_confidence": 0.96,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "TS09WL9999",
+        "conf": 0.885
+      },
+      {
+        "frame_idx": 6,
+        "text": "TS09WL9999",
+        "conf": 0.857
+      }
+    ],
+    "camera_id": "CAM03",
+    "timestamp": "2026-10-08T03:50:00Z",
+    "direction": "W",
+    "lane": 2,
+    "vehicle_type": "car",
+    "vehicle_color": "white",
+    "speed_estimate": 16.5,
+    "plate_image_ref": "simulated",
+    "source": "simulated"
+  }
+]

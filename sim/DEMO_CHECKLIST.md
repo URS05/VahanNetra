@@ -8,13 +8,13 @@ Say that line if a judge asks where the data comes from. Simulated sightings wea
 
 | Item | Status |
 |---|---|
-| Synthetic generator, 100000 events, seeded, schema valid | Ready. Run `python sim/generate.py`. |
+| Synthetic generator, 100000 events, seeded, schema valid | Verified: 100000 events to JSONL in 3.64s, contract test failed 0. Same seed repeats. |
 | Scenarios: hero, fuzzy, cloned, circling, watchlist | Ready in `sim/scenarios.py` and `sim/presets.json`. |
 | Seed users and watchlist | Ready. Needs a running backend. Wipe API is not on the server yet. |
 | Clip acquire docs and label tool | Ready. No URL is pinned, so nothing was downloaded. |
 | Replay with blacklist hit | Ready. Needs a running backend. |
 | Contract test | Ready. |
-| Smoke test | Script ready. Not run here: backend was not already up, and this agent does not start it. |
+| Smoke test | Script ready. This run: backend at 127.0.0.1:8000 refused the connection (0 PASS, 1 FAIL). Start the server, then run it again. |
 | Four simulate presets | Payloads in `sim/presets.json`. Backend preset defaults still differ. See REQUESTS in the sim handoff. |
 
 ## Before the demo

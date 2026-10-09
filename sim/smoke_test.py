@@ -10,8 +10,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from config import DEFAULT_BASE, FUZZY_CAMERA, PRESETS_PATH
 from http_util import login, request_json
-from scenarios import simulate_bodies
-
 PRESET_NAMES = ("normal_trip", "fuzzy_plate", "cloned_plate", "watchlist_hit")
 
 
@@ -104,8 +102,11 @@ class Smoke:
                     diffs.append(f"{name} camera_order")
             if name == "fuzzy_plate" and got.get("fuzzy_camera") != sim.get("fuzzy_camera"):
                 diffs.append("fuzzy_camera")
-            if name == "cloned_plate" and got.get("max_total_seconds") not in (None, sim.get("max_elapsed_s")):
-                diffs.append("cloned cap")
+            if name == "cloned_plate":
+                cap = got.get("max_total_seconds")
+                want = sim.get("max_elapsed_s")
+                if cap is not None and want is not None and float(cap) != float(want):
+                    diffs.append("cloned cap")
             if name == "watchlist_hit" and list(got.get("camera_order") or []) != list(sim.get("camera_order") or []):
                 diffs.append("watchlist camera")
         return "payload diff: " + ", ".join(diffs) if diffs else ""
@@ -195,6 +196,8 @@ class Smoke:
         elapsed_ms = (time.perf_counter() - t0) * 1000.0
         if code != 200:
             return False, f"simulate HTTP {code} {payload}"
+        self.watch_plate = plate
+        self.watch_events = payload.get("events") if isinstance(payload, dict) else []
         code, alerts = self.call("GET", "/api/alerts", token="")
         if code != 200 or not isinstance(alerts, list):
             return False, f"alerts HTTP {code}"
@@ -204,8 +207,13 @@ class Smoke:
         return True, f"{len(hits)} hit in {elapsed_ms:.0f} ms"
 
     def preset_watch(self):
-        # Covered by alert(). Confirm the preset response shape too.
-        return True, "see alert"
+        plate = getattr(self, "watch_plate", "")
+        events = getattr(self, "watch_events", None)
+        if not plate or not events:
+            return False, "watchlist simulate did not run"
+        if events[0].get("camera_id") != "CAM03" or events[0].get("plate_text") != plate:
+            return False, str(events[0].get("camera_id"))
+        return True, f"{plate} at CAM03"
 
     def impossible(self):
         plate = self.plate("C")
@@ -240,11 +248,18 @@ class Smoke:
         ]
         if len(cloned) != 1:
             return False, f"{len(cloned)} cloned alerts"
-        self.clone_ok = True
+        self.clone_events = events
         return True, f"gap {gap:.0f}s, 1 alert"
 
     def preset_cloned(self):
-        return (True, "see impossible_travel") if getattr(self, "clone_ok", False) else (False, "cloned preset failed")
+        events = getattr(self, "clone_events", None)
+        if not events:
+            return False, "cloned simulate did not run"
+        if [e["camera_id"] for e in events] != ["CAM01", "CAM05"]:
+            return False, "camera order"
+        if any(e.get("source") != "simulated" for e in events):
+            return False, "source"
+        return True, "CAM01 CAM05 simulated"
 
     def audit(self):
         query = getattr(self, "audit_query", self.plate("N"))
@@ -274,8 +289,6 @@ def main() -> int:
     if not token:
         print("login failed")
         return 1
-    # Touch local preset catalog so the diff note is meaningful.
-    _ = simulate_bodies()
     return Smoke(args.base, token).run()
 
 

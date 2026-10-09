@@ -179,7 +179,6 @@ def main() -> int:
 
     t0 = time.perf_counter()
     events, cams = generate_events(args.count, args.seed)
-    elapsed = time.perf_counter() - t0
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", encoding="utf-8") as fh:
@@ -187,6 +186,7 @@ def main() -> int:
             fh.write(json.dumps(ev, separators=(",", ":"), ensure_ascii=False))
             fh.write("\n")
     Path(args.cameras_out).write_text(json.dumps(cams, indent=2), encoding="utf-8")
+    elapsed = time.perf_counter() - t0
     sample = (events[0], events[len(events) // 2], events[-1])
     for ev in sample:
         errs = validate_event(ev)

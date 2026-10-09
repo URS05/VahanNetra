@@ -148,7 +148,7 @@ def main() -> int:
     inject_scenario(args.base, token, "cloned_plate", scenario_cloned_plate())
     inject_scenario(args.base, token, "watchlist_hit", scenario_watchlist_hit())
     inject_scenario(args.base, token, "circling", scenario_circling())
-    print("fuzzy_plate reuses HERO_PLATE from normal_trip. Search TS09VN2613.")
+    print("Search TS09VN2613 (one wrong character). Possible match is TS09VN2612.")
     print("seed_demo done")
     return 0
 

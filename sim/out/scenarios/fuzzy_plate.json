@@ -1,0 +1,157 @@
+[
+  {
+    "event_id": "sim-fuzzy-01",
+    "plate_text": "TS09VN2612",
+    "plate_confidence": 0.94,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "TS09VN2612",
+        "conf": 0.865
+      },
+      {
+        "frame_idx": 6,
+        "text": "TS09VN2612",
+        "conf": 0.837
+      }
+    ],
+    "camera_id": "CAM01",
+    "timestamp": "2026-10-08T03:30:00Z",
+    "direction": "SE",
+    "lane": 4,
+    "vehicle_type": "car",
+    "vehicle_color": "white",
+    "speed_estimate": 16.5,
+    "plate_image_ref": "simulated",
+    "source": "simulated"
+  },
+  {
+    "event_id": "sim-fuzzy-02",
+    "plate_text": "TS09VN2612",
+    "plate_confidence": 0.94,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "TS09VN2612",
+        "conf": 0.932
+      },
+      {
+        "frame_idx": 6,
+        "text": "TS09VN2612",
+        "conf": 0.904
+      },
+      {
+        "frame_idx": 8,
+        "text": "TS09VN2612",
+        "conf": 0.982
+      }
+    ],
+    "camera_id": "CAM02",
+    "timestamp": "2026-10-08T03:33:37Z",
+    "direction": "S",
+    "lane": 1,
+    "vehicle_type": "car",
+    "vehicle_color": "black",
+    "speed_estimate": 32.4,
+    "plate_image_ref": "simulated",
+    "source": "simulated"
+  },
+  {
+    "event_id": "sim-fuzzy-03",
+    "plate_text": "TS09VN2613",
+    "plate_confidence": 0.72,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "TS09VN2613",
+        "conf": 0.84
+      },
+      {
+        "frame_idx": 4,
+        "text": "TS09VN2613",
+        "conf": 0.989
+      },
+      {
+        "frame_idx": 4,
+        "text": "TS09VN2613",
+        "conf": 0.966
+      },
+      {
+        "frame_idx": 15,
+        "text": "TS09VN2613",
+        "conf": 0.836
+      }
+    ],
+    "camera_id": "CAM03",
+    "timestamp": "2026-10-08T03:39:40Z",
+    "direction": "W",
+    "lane": 2,
+    "vehicle_type": "car",
+    "vehicle_color": "grey",
+    "speed_estimate": 29.6,
+    "plate_image_ref": "simulated",
+    "source": "simulated"
+  },
+  {
+    "event_id": "sim-fuzzy-04",
+    "plate_text": "TS09VN2612",
+    "plate_confidence": 0.94,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "TS09VN2612",
+        "conf": 1.0
+      },
+      {
+        "frame_idx": 2,
+        "text": "TS09VN2612",
+        "conf": 0.896
+      }
+    ],
+    "camera_id": "CAM04",
+    "timestamp": "2026-10-08T03:48:20Z",
+    "direction": "SW",
+    "lane": 4,
+    "vehicle_type": "car",
+    "vehicle_color": "grey",
+    "speed_estimate": 19.7,
+    "plate_image_ref": "simulated",
+    "source": "simulated"
+  },
+  {
+    "event_id": "sim-fuzzy-05",
+    "plate_text": "TS09VN2612",
+    "plate_confidence": 0.94,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "TS09VN2612",
+        "conf": 0.942
+      },
+      {
+        "frame_idx": 3,
+        "text": "TS09VN2612",
+        "conf": 0.853
+      },
+      {
+        "frame_idx": 12,
+        "text": "TS09VN2612",
+        "conf": 0.864
+      }
+    ],
+    "camera_id": "CAM05",
+    "timestamp": "2026-10-08T03:53:46Z",
+    "direction": "S",
+    "lane": 2,
+    "vehicle_type": "car",
+    "vehicle_color": "white",
+    "speed_estimate": 21.3,
+    "plate_image_ref": "simulated",
+    "source": "simulated"
+  }
+]

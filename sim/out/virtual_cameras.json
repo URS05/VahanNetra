@@ -1,0 +1,2567 @@
+[
+  {
+    "camera_id": "CAM01",
+    "name": "Hitech City Junction",
+    "lat": 17.450638,
+    "lon": 78.382001,
+    "heading": 135,
+    "lanes": 4,
+    "status": "online",
+    "snapped_distance_m": 15.03,
+    "osm_name": "Cyber Towers Bus Stop / Cyber Towers - Madhapur Main Road",
+    "video_file": "data/videos/CAM01.mp4",
+    "hotspot": true
+  },
+  {
+    "camera_id": "CAM02",
+    "name": "Madhapur",
+    "lat": 17.44096,
+    "lon": 78.391643,
+    "heading": 180,
+    "lanes": 3,
+    "status": "online",
+    "snapped_distance_m": 7.65,
+    "osm_name": "Madhapur suburb, snapped to Cyber Towers - Madhapur Main Road",
+    "video_file": "data/videos/CAM02.mp4",
+    "hotspot": false
+  },
+  {
+    "camera_id": "CAM03",
+    "name": "Kondapur",
+    "lat": 17.458785,
+    "lon": 78.373051,
+    "heading": 270,
+    "lanes": 3,
+    "status": "online",
+    "snapped_distance_m": 0.85,
+    "osm_name": "Kondapur suburb node",
+    "video_file": "data/videos/CAM03.mp4",
+    "hotspot": false
+  },
+  {
+    "camera_id": "CAM04",
+    "name": "Gachibowli Junction",
+    "lat": 17.443465,
+    "lon": 78.35224,
+    "heading": 225,
+    "lanes": 4,
+    "status": "online",
+    "snapped_distance_m": 0.0,
+    "osm_name": "Gachibowli suburb snapped onto nearest drivable road",
+    "video_file": "data/videos/CAM04.mp4",
+    "hotspot": true
+  },
+  {
+    "camera_id": "CAM05",
+    "name": "Financial District",
+    "lat": 17.421804,
+    "lon": 78.337995,
+    "heading": 200,
+    "lanes": 3,
+    "status": "online",
+    "snapped_distance_m": 3.21,
+    "osm_name": "Nanakramguda, Road No 2",
+    "video_file": "data/videos/CAM05.mp4",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM001",
+    "name": "Hyderabad virtual 001",
+    "lat": 17.459334,
+    "lon": 78.372817,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM002",
+    "name": "Hyderabad virtual 002",
+    "lat": 17.406934,
+    "lon": 78.335184,
+    "heading": 0,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM003",
+    "name": "Hyderabad virtual 003",
+    "lat": 17.425477,
+    "lon": 78.3402,
+    "heading": 270,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM004",
+    "name": "Hyderabad virtual 004",
+    "lat": 17.469924,
+    "lon": 78.355285,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM005",
+    "name": "Hyderabad virtual 005",
+    "lat": 17.446382,
+    "lon": 78.389511,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM006",
+    "name": "Hyderabad virtual 006",
+    "lat": 17.445561,
+    "lon": 78.376383,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM007",
+    "name": "Hyderabad virtual 007",
+    "lat": 17.435072,
+    "lon": 78.416774,
+    "heading": 270,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM008",
+    "name": "Hyderabad virtual 008",
+    "lat": 17.43568,
+    "lon": 78.333014,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM009",
+    "name": "Hyderabad virtual 009",
+    "lat": 17.45079,
+    "lon": 78.409111,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM010",
+    "name": "Hyderabad virtual 010",
+    "lat": 17.44835,
+    "lon": 78.347374,
+    "heading": 225,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM011",
+    "name": "Hyderabad virtual 011",
+    "lat": 17.466051,
+    "lon": 78.379659,
+    "heading": 45,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM012",
+    "name": "Hyderabad virtual 012",
+    "lat": 17.430053,
+    "lon": 78.325877,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM013",
+    "name": "Hyderabad virtual 013",
+    "lat": 17.4496,
+    "lon": 78.366834,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM014",
+    "name": "Hyderabad virtual 014",
+    "lat": 17.46162,
+    "lon": 78.378443,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM015",
+    "name": "Hyderabad virtual 015",
+    "lat": 17.439405,
+    "lon": 78.38615,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM016",
+    "name": "Hyderabad virtual 016",
+    "lat": 17.430608,
+    "lon": 78.339267,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM017",
+    "name": "Hyderabad virtual 017",
+    "lat": 17.418182,
+    "lon": 78.327891,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM018",
+    "name": "Hyderabad virtual 018",
+    "lat": 17.463638,
+    "lon": 78.369503,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM019",
+    "name": "Hyderabad virtual 019",
+    "lat": 17.44649,
+    "lon": 78.385453,
+    "heading": 315,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM020",
+    "name": "Hyderabad virtual 020",
+    "lat": 17.434792,
+    "lon": 78.320408,
+    "heading": 45,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM021",
+    "name": "Hyderabad virtual 021",
+    "lat": 17.465123,
+    "lon": 78.392232,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM022",
+    "name": "Hyderabad virtual 022",
+    "lat": 17.439294,
+    "lon": 78.40798,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM023",
+    "name": "Hyderabad virtual 023",
+    "lat": 17.431075,
+    "lon": 78.312769,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM024",
+    "name": "Hyderabad virtual 024",
+    "lat": 17.428462,
+    "lon": 78.401093,
+    "heading": 0,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM025",
+    "name": "Hyderabad virtual 025",
+    "lat": 17.436665,
+    "lon": 78.377068,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM026",
+    "name": "Hyderabad virtual 026",
+    "lat": 17.437894,
+    "lon": 78.323079,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM027",
+    "name": "Hyderabad virtual 027",
+    "lat": 17.434579,
+    "lon": 78.315091,
+    "heading": 315,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM028",
+    "name": "Hyderabad virtual 028",
+    "lat": 17.435212,
+    "lon": 78.335228,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM029",
+    "name": "Hyderabad virtual 029",
+    "lat": 17.456581,
+    "lon": 78.385554,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM030",
+    "name": "Hyderabad virtual 030",
+    "lat": 17.457851,
+    "lon": 78.350494,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM031",
+    "name": "Hyderabad virtual 031",
+    "lat": 17.453817,
+    "lon": 78.372285,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM032",
+    "name": "Hyderabad virtual 032",
+    "lat": 17.44088,
+    "lon": 78.396596,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM033",
+    "name": "Hyderabad virtual 033",
+    "lat": 17.464868,
+    "lon": 78.362764,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM034",
+    "name": "Hyderabad virtual 034",
+    "lat": 17.439946,
+    "lon": 78.356721,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM035",
+    "name": "Hyderabad virtual 035",
+    "lat": 17.456361,
+    "lon": 78.376756,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM036",
+    "name": "Hyderabad virtual 036",
+    "lat": 17.367584,
+    "lon": 78.378415,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM037",
+    "name": "Hyderabad virtual 037",
+    "lat": 17.469606,
+    "lon": 78.358985,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM038",
+    "name": "Hyderabad virtual 038",
+    "lat": 17.438148,
+    "lon": 78.383671,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM039",
+    "name": "Hyderabad virtual 039",
+    "lat": 17.407329,
+    "lon": 78.343472,
+    "heading": 0,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM040",
+    "name": "Hyderabad virtual 040",
+    "lat": 17.478817,
+    "lon": 78.319957,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM041",
+    "name": "Hyderabad virtual 041",
+    "lat": 17.457953,
+    "lon": 78.340167,
+    "heading": 0,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM042",
+    "name": "Hyderabad virtual 042",
+    "lat": 17.435734,
+    "lon": 78.359317,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM043",
+    "name": "Hyderabad virtual 043",
+    "lat": 17.457834,
+    "lon": 78.394493,
+    "heading": 0,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM044",
+    "name": "Hyderabad virtual 044",
+    "lat": 17.453668,
+    "lon": 78.382104,
+    "heading": 90,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM045",
+    "name": "Hyderabad virtual 045",
+    "lat": 17.371216,
+    "lon": 78.322299,
+    "heading": 45,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM046",
+    "name": "Hyderabad virtual 046",
+    "lat": 17.416529,
+    "lon": 78.412992,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM047",
+    "name": "Hyderabad virtual 047",
+    "lat": 17.406755,
+    "lon": 78.34366,
+    "heading": 225,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM048",
+    "name": "Hyderabad virtual 048",
+    "lat": 17.449378,
+    "lon": 78.369299,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM049",
+    "name": "Hyderabad virtual 049",
+    "lat": 17.432973,
+    "lon": 78.386363,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM050",
+    "name": "Hyderabad virtual 050",
+    "lat": 17.413351,
+    "lon": 78.353592,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM051",
+    "name": "Hyderabad virtual 051",
+    "lat": 17.438735,
+    "lon": 78.393199,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM052",
+    "name": "Hyderabad virtual 052",
+    "lat": 17.472994,
+    "lon": 78.363473,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM053",
+    "name": "Hyderabad virtual 053",
+    "lat": 17.432481,
+    "lon": 78.405673,
+    "heading": 90,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM054",
+    "name": "Hyderabad virtual 054",
+    "lat": 17.448794,
+    "lon": 78.380973,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM055",
+    "name": "Hyderabad virtual 055",
+    "lat": 17.435961,
+    "lon": 78.37925,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM056",
+    "name": "Hyderabad virtual 056",
+    "lat": 17.445896,
+    "lon": 78.383073,
+    "heading": 315,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM057",
+    "name": "Hyderabad virtual 057",
+    "lat": 17.438527,
+    "lon": 78.313425,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM058",
+    "name": "Hyderabad virtual 058",
+    "lat": 17.461755,
+    "lon": 78.360382,
+    "heading": 90,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM059",
+    "name": "Hyderabad virtual 059",
+    "lat": 17.464999,
+    "lon": 78.371564,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM060",
+    "name": "Hyderabad virtual 060",
+    "lat": 17.435633,
+    "lon": 78.334625,
+    "heading": 90,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM061",
+    "name": "Hyderabad virtual 061",
+    "lat": 17.496669,
+    "lon": 78.397293,
+    "heading": 270,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM062",
+    "name": "Hyderabad virtual 062",
+    "lat": 17.468951,
+    "lon": 78.369873,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM063",
+    "name": "Hyderabad virtual 063",
+    "lat": 17.44641,
+    "lon": 78.365395,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM064",
+    "name": "Hyderabad virtual 064",
+    "lat": 17.438053,
+    "lon": 78.363779,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM065",
+    "name": "Hyderabad virtual 065",
+    "lat": 17.437305,
+    "lon": 78.383673,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM066",
+    "name": "Hyderabad virtual 066",
+    "lat": 17.418192,
+    "lon": 78.355316,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM067",
+    "name": "Hyderabad virtual 067",
+    "lat": 17.447213,
+    "lon": 78.389702,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM068",
+    "name": "Hyderabad virtual 068",
+    "lat": 17.43791,
+    "lon": 78.362551,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM069",
+    "name": "Hyderabad virtual 069",
+    "lat": 17.37619,
+    "lon": 78.407941,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM070",
+    "name": "Hyderabad virtual 070",
+    "lat": 17.425526,
+    "lon": 78.367561,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM071",
+    "name": "Hyderabad virtual 071",
+    "lat": 17.463219,
+    "lon": 78.378933,
+    "heading": 45,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM072",
+    "name": "Hyderabad virtual 072",
+    "lat": 17.430997,
+    "lon": 78.380027,
+    "heading": 225,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM073",
+    "name": "Hyderabad virtual 073",
+    "lat": 17.437618,
+    "lon": 78.323021,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM074",
+    "name": "Hyderabad virtual 074",
+    "lat": 17.384364,
+    "lon": 78.368293,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM075",
+    "name": "Hyderabad virtual 075",
+    "lat": 17.402542,
+    "lon": 78.325222,
+    "heading": 225,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM076",
+    "name": "Hyderabad virtual 076",
+    "lat": 17.441362,
+    "lon": 78.402217,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM077",
+    "name": "Hyderabad virtual 077",
+    "lat": 17.427703,
+    "lon": 78.342288,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM078",
+    "name": "Hyderabad virtual 078",
+    "lat": 17.39145,
+    "lon": 78.323896,
+    "heading": 0,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM079",
+    "name": "Hyderabad virtual 079",
+    "lat": 17.447471,
+    "lon": 78.361906,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM080",
+    "name": "Hyderabad virtual 080",
+    "lat": 17.440594,
+    "lon": 78.386202,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM081",
+    "name": "Hyderabad virtual 081",
+    "lat": 17.446578,
+    "lon": 78.373843,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM082",
+    "name": "Hyderabad virtual 082",
+    "lat": 17.420528,
+    "lon": 78.340062,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM083",
+    "name": "Hyderabad virtual 083",
+    "lat": 17.449498,
+    "lon": 78.369804,
+    "heading": 225,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM084",
+    "name": "Hyderabad virtual 084",
+    "lat": 17.419167,
+    "lon": 78.352642,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM085",
+    "name": "Hyderabad virtual 085",
+    "lat": 17.426454,
+    "lon": 78.331103,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM086",
+    "name": "Hyderabad virtual 086",
+    "lat": 17.421249,
+    "lon": 78.328608,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM087",
+    "name": "Hyderabad virtual 087",
+    "lat": 17.392829,
+    "lon": 78.340302,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM088",
+    "name": "Hyderabad virtual 088",
+    "lat": 17.450447,
+    "lon": 78.359671,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM089",
+    "name": "Hyderabad virtual 089",
+    "lat": 17.420577,
+    "lon": 78.322237,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM090",
+    "name": "Hyderabad virtual 090",
+    "lat": 17.441771,
+    "lon": 78.383463,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM091",
+    "name": "Hyderabad virtual 091",
+    "lat": 17.451535,
+    "lon": 78.369091,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM092",
+    "name": "Hyderabad virtual 092",
+    "lat": 17.436459,
+    "lon": 78.37239,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM093",
+    "name": "Hyderabad virtual 093",
+    "lat": 17.442948,
+    "lon": 78.348239,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM094",
+    "name": "Hyderabad virtual 094",
+    "lat": 17.458568,
+    "lon": 78.369546,
+    "heading": 0,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM095",
+    "name": "Hyderabad virtual 095",
+    "lat": 17.43566,
+    "lon": 78.379431,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM096",
+    "name": "Hyderabad virtual 096",
+    "lat": 17.43725,
+    "lon": 78.350609,
+    "heading": 225,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM097",
+    "name": "Hyderabad virtual 097",
+    "lat": 17.434547,
+    "lon": 78.337189,
+    "heading": 0,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM098",
+    "name": "Hyderabad virtual 098",
+    "lat": 17.448857,
+    "lon": 78.357521,
+    "heading": 0,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM099",
+    "name": "Hyderabad virtual 099",
+    "lat": 17.38791,
+    "lon": 78.302446,
+    "heading": 90,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM100",
+    "name": "Hyderabad virtual 100",
+    "lat": 17.452941,
+    "lon": 78.371848,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM101",
+    "name": "Hyderabad virtual 101",
+    "lat": 17.438498,
+    "lon": 78.345856,
+    "heading": 90,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM102",
+    "name": "Hyderabad virtual 102",
+    "lat": 17.466078,
+    "lon": 78.38473,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM103",
+    "name": "Hyderabad virtual 103",
+    "lat": 17.387766,
+    "lon": 78.371052,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM104",
+    "name": "Hyderabad virtual 104",
+    "lat": 17.402222,
+    "lon": 78.382111,
+    "heading": 45,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM105",
+    "name": "Hyderabad virtual 105",
+    "lat": 17.408609,
+    "lon": 78.351405,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM106",
+    "name": "Hyderabad virtual 106",
+    "lat": 17.44124,
+    "lon": 78.370173,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM107",
+    "name": "Hyderabad virtual 107",
+    "lat": 17.463666,
+    "lon": 78.384884,
+    "heading": 90,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM108",
+    "name": "Hyderabad virtual 108",
+    "lat": 17.438561,
+    "lon": 78.329718,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM109",
+    "name": "Hyderabad virtual 109",
+    "lat": 17.413466,
+    "lon": 78.350657,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM110",
+    "name": "Hyderabad virtual 110",
+    "lat": 17.394141,
+    "lon": 78.355765,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM111",
+    "name": "Hyderabad virtual 111",
+    "lat": 17.447331,
+    "lon": 78.362687,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM112",
+    "name": "Hyderabad virtual 112",
+    "lat": 17.429047,
+    "lon": 78.329941,
+    "heading": 0,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM113",
+    "name": "Hyderabad virtual 113",
+    "lat": 17.371986,
+    "lon": 78.386409,
+    "heading": 315,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM114",
+    "name": "Hyderabad virtual 114",
+    "lat": 17.456685,
+    "lon": 78.377508,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM115",
+    "name": "Hyderabad virtual 115",
+    "lat": 17.373027,
+    "lon": 78.326592,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM116",
+    "name": "Hyderabad virtual 116",
+    "lat": 17.411663,
+    "lon": 78.366417,
+    "heading": 225,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM117",
+    "name": "Hyderabad virtual 117",
+    "lat": 17.437054,
+    "lon": 78.342217,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM118",
+    "name": "Hyderabad virtual 118",
+    "lat": 17.427304,
+    "lon": 78.380576,
+    "heading": 45,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM119",
+    "name": "Hyderabad virtual 119",
+    "lat": 17.429855,
+    "lon": 78.400233,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM120",
+    "name": "Hyderabad virtual 120",
+    "lat": 17.425288,
+    "lon": 78.355293,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM121",
+    "name": "Hyderabad virtual 121",
+    "lat": 17.433842,
+    "lon": 78.399132,
+    "heading": 90,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM122",
+    "name": "Hyderabad virtual 122",
+    "lat": 17.452559,
+    "lon": 78.389108,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM123",
+    "name": "Hyderabad virtual 123",
+    "lat": 17.428723,
+    "lon": 78.404726,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM124",
+    "name": "Hyderabad virtual 124",
+    "lat": 17.447422,
+    "lon": 78.356901,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM125",
+    "name": "Hyderabad virtual 125",
+    "lat": 17.416099,
+    "lon": 78.30889,
+    "heading": 0,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM126",
+    "name": "Hyderabad virtual 126",
+    "lat": 17.437973,
+    "lon": 78.323062,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM127",
+    "name": "Hyderabad virtual 127",
+    "lat": 17.447292,
+    "lon": 78.362707,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM128",
+    "name": "Hyderabad virtual 128",
+    "lat": 17.43617,
+    "lon": 78.355427,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM129",
+    "name": "Hyderabad virtual 129",
+    "lat": 17.454585,
+    "lon": 78.390644,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM130",
+    "name": "Hyderabad virtual 130",
+    "lat": 17.438292,
+    "lon": 78.370258,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM131",
+    "name": "Hyderabad virtual 131",
+    "lat": 17.450282,
+    "lon": 78.351157,
+    "heading": 0,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM132",
+    "name": "Hyderabad virtual 132",
+    "lat": 17.466093,
+    "lon": 78.371396,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM133",
+    "name": "Hyderabad virtual 133",
+    "lat": 17.447508,
+    "lon": 78.379342,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM134",
+    "name": "Hyderabad virtual 134",
+    "lat": 17.446275,
+    "lon": 78.406346,
+    "heading": 90,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM135",
+    "name": "Hyderabad virtual 135",
+    "lat": 17.462207,
+    "lon": 78.384724,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM136",
+    "name": "Hyderabad virtual 136",
+    "lat": 17.465975,
+    "lon": 78.388987,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM137",
+    "name": "Hyderabad virtual 137",
+    "lat": 17.464657,
+    "lon": 78.390444,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM138",
+    "name": "Hyderabad virtual 138",
+    "lat": 17.42494,
+    "lon": 78.320742,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM139",
+    "name": "Hyderabad virtual 139",
+    "lat": 17.439898,
+    "lon": 78.397097,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM140",
+    "name": "Hyderabad virtual 140",
+    "lat": 17.421024,
+    "lon": 78.397709,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM141",
+    "name": "Hyderabad virtual 141",
+    "lat": 17.452343,
+    "lon": 78.358817,
+    "heading": 90,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM142",
+    "name": "Hyderabad virtual 142",
+    "lat": 17.435841,
+    "lon": 78.368267,
+    "heading": 0,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM143",
+    "name": "Hyderabad virtual 143",
+    "lat": 17.452423,
+    "lon": 78.389978,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM144",
+    "name": "Hyderabad virtual 144",
+    "lat": 17.360161,
+    "lon": 78.404324,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM145",
+    "name": "Hyderabad virtual 145",
+    "lat": 17.416828,
+    "lon": 78.347227,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM146",
+    "name": "Hyderabad virtual 146",
+    "lat": 17.40852,
+    "lon": 78.330364,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM147",
+    "name": "Hyderabad virtual 147",
+    "lat": 17.432579,
+    "lon": 78.345547,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM148",
+    "name": "Hyderabad virtual 148",
+    "lat": 17.428821,
+    "lon": 78.369961,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM149",
+    "name": "Hyderabad virtual 149",
+    "lat": 17.450679,
+    "lon": 78.318477,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM150",
+    "name": "Hyderabad virtual 150",
+    "lat": 17.418169,
+    "lon": 78.3579,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM151",
+    "name": "Hyderabad virtual 151",
+    "lat": 17.436769,
+    "lon": 78.40683,
+    "heading": 90,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM152",
+    "name": "Hyderabad virtual 152",
+    "lat": 17.437701,
+    "lon": 78.362598,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM153",
+    "name": "Hyderabad virtual 153",
+    "lat": 17.470934,
+    "lon": 78.375928,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM154",
+    "name": "Hyderabad virtual 154",
+    "lat": 17.437889,
+    "lon": 78.354109,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM155",
+    "name": "Hyderabad virtual 155",
+    "lat": 17.481744,
+    "lon": 78.417693,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM156",
+    "name": "Hyderabad virtual 156",
+    "lat": 17.427036,
+    "lon": 78.361049,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM157",
+    "name": "Hyderabad virtual 157",
+    "lat": 17.470935,
+    "lon": 78.378242,
+    "heading": 90,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM158",
+    "name": "Hyderabad virtual 158",
+    "lat": 17.377674,
+    "lon": 78.415842,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM159",
+    "name": "Hyderabad virtual 159",
+    "lat": 17.421643,
+    "lon": 78.363114,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM160",
+    "name": "Hyderabad virtual 160",
+    "lat": 17.417397,
+    "lon": 78.378574,
+    "heading": 90,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM161",
+    "name": "Hyderabad virtual 161",
+    "lat": 17.452973,
+    "lon": 78.379988,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM162",
+    "name": "Hyderabad virtual 162",
+    "lat": 17.480308,
+    "lon": 78.345601,
+    "heading": 225,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM163",
+    "name": "Hyderabad virtual 163",
+    "lat": 17.466316,
+    "lon": 78.404686,
+    "heading": 0,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM164",
+    "name": "Hyderabad virtual 164",
+    "lat": 17.476692,
+    "lon": 78.381935,
+    "heading": 270,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM165",
+    "name": "Hyderabad virtual 165",
+    "lat": 17.458545,
+    "lon": 78.312061,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM166",
+    "name": "Hyderabad virtual 166",
+    "lat": 17.434294,
+    "lon": 78.392662,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM167",
+    "name": "Hyderabad virtual 167",
+    "lat": 17.431751,
+    "lon": 78.388477,
+    "heading": 90,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM168",
+    "name": "Hyderabad virtual 168",
+    "lat": 17.435154,
+    "lon": 78.342305,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM169",
+    "name": "Hyderabad virtual 169",
+    "lat": 17.380036,
+    "lon": 78.355338,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM170",
+    "name": "Hyderabad virtual 170",
+    "lat": 17.464999,
+    "lon": 78.38075,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM171",
+    "name": "Hyderabad virtual 171",
+    "lat": 17.44854,
+    "lon": 78.376441,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM172",
+    "name": "Hyderabad virtual 172",
+    "lat": 17.456644,
+    "lon": 78.35482,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM173",
+    "name": "Hyderabad virtual 173",
+    "lat": 17.479467,
+    "lon": 78.312798,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM174",
+    "name": "Hyderabad virtual 174",
+    "lat": 17.476522,
+    "lon": 78.365679,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM175",
+    "name": "Hyderabad virtual 175",
+    "lat": 17.46542,
+    "lon": 78.390827,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM176",
+    "name": "Hyderabad virtual 176",
+    "lat": 17.448669,
+    "lon": 78.361896,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM177",
+    "name": "Hyderabad virtual 177",
+    "lat": 17.467446,
+    "lon": 78.381703,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM178",
+    "name": "Hyderabad virtual 178",
+    "lat": 17.44376,
+    "lon": 78.379871,
+    "heading": 225,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM179",
+    "name": "Hyderabad virtual 179",
+    "lat": 17.452547,
+    "lon": 78.370009,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM180",
+    "name": "Hyderabad virtual 180",
+    "lat": 17.482704,
+    "lon": 78.343903,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM181",
+    "name": "Hyderabad virtual 181",
+    "lat": 17.460291,
+    "lon": 78.344865,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM182",
+    "name": "Hyderabad virtual 182",
+    "lat": 17.437705,
+    "lon": 78.398795,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM183",
+    "name": "Hyderabad virtual 183",
+    "lat": 17.425966,
+    "lon": 78.353557,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM184",
+    "name": "Hyderabad virtual 184",
+    "lat": 17.454128,
+    "lon": 78.370147,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM185",
+    "name": "Hyderabad virtual 185",
+    "lat": 17.426007,
+    "lon": 78.374346,
+    "heading": 225,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM186",
+    "name": "Hyderabad virtual 186",
+    "lat": 17.455513,
+    "lon": 78.380715,
+    "heading": 180,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM187",
+    "name": "Hyderabad virtual 187",
+    "lat": 17.424592,
+    "lon": 78.374983,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM188",
+    "name": "Hyderabad virtual 188",
+    "lat": 17.408688,
+    "lon": 78.336326,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM189",
+    "name": "Hyderabad virtual 189",
+    "lat": 17.381633,
+    "lon": 78.349786,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM190",
+    "name": "Hyderabad virtual 190",
+    "lat": 17.441963,
+    "lon": 78.36839,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM191",
+    "name": "Hyderabad virtual 191",
+    "lat": 17.479763,
+    "lon": 78.311923,
+    "heading": 225,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM192",
+    "name": "Hyderabad virtual 192",
+    "lat": 17.450276,
+    "lon": 78.307266,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM193",
+    "name": "Hyderabad virtual 193",
+    "lat": 17.492862,
+    "lon": 78.398903,
+    "heading": 45,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM194",
+    "name": "Hyderabad virtual 194",
+    "lat": 17.438763,
+    "lon": 78.321816,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM195",
+    "name": "Hyderabad virtual 195",
+    "lat": 17.470177,
+    "lon": 78.324625,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM196",
+    "name": "Hyderabad virtual 196",
+    "lat": 17.434788,
+    "lon": 78.378955,
+    "heading": 0,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM197",
+    "name": "Hyderabad virtual 197",
+    "lat": 17.380256,
+    "lon": 78.315599,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM198",
+    "name": "Hyderabad virtual 198",
+    "lat": 17.437383,
+    "lon": 78.376898,
+    "heading": 135,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM199",
+    "name": "Hyderabad virtual 199",
+    "lat": 17.432513,
+    "lon": 78.378206,
+    "heading": 270,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM200",
+    "name": "Hyderabad virtual 200",
+    "lat": 17.449783,
+    "lon": 78.39201,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM201",
+    "name": "Hyderabad virtual 201",
+    "lat": 17.405365,
+    "lon": 78.348191,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM202",
+    "name": "Hyderabad virtual 202",
+    "lat": 17.434828,
+    "lon": 78.381244,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM203",
+    "name": "Hyderabad virtual 203",
+    "lat": 17.428638,
+    "lon": 78.409164,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM204",
+    "name": "Hyderabad virtual 204",
+    "lat": 17.425325,
+    "lon": 78.383544,
+    "heading": 225,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM205",
+    "name": "Hyderabad virtual 205",
+    "lat": 17.434278,
+    "lon": 78.354446,
+    "heading": 270,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM206",
+    "name": "Hyderabad virtual 206",
+    "lat": 17.376018,
+    "lon": 78.378566,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM207",
+    "name": "Hyderabad virtual 207",
+    "lat": 17.437857,
+    "lon": 78.40343,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM208",
+    "name": "Hyderabad virtual 208",
+    "lat": 17.403757,
+    "lon": 78.337503,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM209",
+    "name": "Hyderabad virtual 209",
+    "lat": 17.456155,
+    "lon": 78.356912,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM210",
+    "name": "Hyderabad virtual 210",
+    "lat": 17.459443,
+    "lon": 78.377416,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM211",
+    "name": "Hyderabad virtual 211",
+    "lat": 17.424025,
+    "lon": 78.344115,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM212",
+    "name": "Hyderabad virtual 212",
+    "lat": 17.491758,
+    "lon": 78.350752,
+    "heading": 0,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM213",
+    "name": "Hyderabad virtual 213",
+    "lat": 17.444515,
+    "lon": 78.373318,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM214",
+    "name": "Hyderabad virtual 214",
+    "lat": 17.445242,
+    "lon": 78.384027,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM215",
+    "name": "Hyderabad virtual 215",
+    "lat": 17.455891,
+    "lon": 78.369324,
+    "heading": 0,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM216",
+    "name": "Hyderabad virtual 216",
+    "lat": 17.476125,
+    "lon": 78.332094,
+    "heading": 90,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM217",
+    "name": "Hyderabad virtual 217",
+    "lat": 17.403258,
+    "lon": 78.340779,
+    "heading": 0,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM218",
+    "name": "Hyderabad virtual 218",
+    "lat": 17.439285,
+    "lon": 78.348094,
+    "heading": 90,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM219",
+    "name": "Hyderabad virtual 219",
+    "lat": 17.435941,
+    "lon": 78.383098,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM220",
+    "name": "Hyderabad virtual 220",
+    "lat": 17.436282,
+    "lon": 78.39962,
+    "heading": 45,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM221",
+    "name": "Hyderabad virtual 221",
+    "lat": 17.405595,
+    "lon": 78.322932,
+    "heading": 315,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM222",
+    "name": "Hyderabad virtual 222",
+    "lat": 17.419718,
+    "lon": 78.329829,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM223",
+    "name": "Hyderabad virtual 223",
+    "lat": 17.465201,
+    "lon": 78.376404,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM224",
+    "name": "Hyderabad virtual 224",
+    "lat": 17.405776,
+    "lon": 78.327354,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM225",
+    "name": "Hyderabad virtual 225",
+    "lat": 17.400523,
+    "lon": 78.314398,
+    "heading": 315,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM226",
+    "name": "Hyderabad virtual 226",
+    "lat": 17.436647,
+    "lon": 78.398975,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM227",
+    "name": "Hyderabad virtual 227",
+    "lat": 17.448342,
+    "lon": 78.380552,
+    "heading": 45,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM228",
+    "name": "Hyderabad virtual 228",
+    "lat": 17.418363,
+    "lon": 78.34304,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM229",
+    "name": "Hyderabad virtual 229",
+    "lat": 17.446972,
+    "lon": 78.389165,
+    "heading": 315,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM230",
+    "name": "Hyderabad virtual 230",
+    "lat": 17.372338,
+    "lon": 78.401338,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM231",
+    "name": "Hyderabad virtual 231",
+    "lat": 17.406635,
+    "lon": 78.351334,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM232",
+    "name": "Hyderabad virtual 232",
+    "lat": 17.42571,
+    "lon": 78.396439,
+    "heading": 135,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM233",
+    "name": "Hyderabad virtual 233",
+    "lat": 17.431466,
+    "lon": 78.378915,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM234",
+    "name": "Hyderabad virtual 234",
+    "lat": 17.439015,
+    "lon": 78.391824,
+    "heading": 315,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM235",
+    "name": "Hyderabad virtual 235",
+    "lat": 17.466383,
+    "lon": 78.353869,
+    "heading": 225,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM236",
+    "name": "Hyderabad virtual 236",
+    "lat": 17.427923,
+    "lon": 78.350159,
+    "heading": 180,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM237",
+    "name": "Hyderabad virtual 237",
+    "lat": 17.459049,
+    "lon": 78.366226,
+    "heading": 315,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM238",
+    "name": "Hyderabad virtual 238",
+    "lat": 17.443547,
+    "lon": 78.386164,
+    "heading": 45,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": true
+  },
+  {
+    "camera_id": "VCAM239",
+    "name": "Hyderabad virtual 239",
+    "lat": 17.442123,
+    "lon": 78.354195,
+    "heading": 0,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM240",
+    "name": "Hyderabad virtual 240",
+    "lat": 17.440032,
+    "lon": 78.322589,
+    "heading": 315,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM241",
+    "name": "Hyderabad virtual 241",
+    "lat": 17.448857,
+    "lon": 78.393196,
+    "heading": 225,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM242",
+    "name": "Hyderabad virtual 242",
+    "lat": 17.424369,
+    "lon": 78.399117,
+    "heading": 315,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM243",
+    "name": "Hyderabad virtual 243",
+    "lat": 17.43606,
+    "lon": 78.406689,
+    "heading": 270,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM244",
+    "name": "Hyderabad virtual 244",
+    "lat": 17.455046,
+    "lon": 78.306284,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM245",
+    "name": "Hyderabad virtual 245",
+    "lat": 17.428226,
+    "lon": 78.330224,
+    "heading": 90,
+    "lanes": 3,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM246",
+    "name": "Hyderabad virtual 246",
+    "lat": 17.455963,
+    "lon": 78.384811,
+    "heading": 270,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM247",
+    "name": "Hyderabad virtual 247",
+    "lat": 17.443783,
+    "lon": 78.377561,
+    "heading": 225,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM248",
+    "name": "Hyderabad virtual 248",
+    "lat": 17.476054,
+    "lon": 78.388653,
+    "heading": 45,
+    "lanes": 4,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM249",
+    "name": "Hyderabad virtual 249",
+    "lat": 17.431188,
+    "lon": 78.302188,
+    "heading": 180,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  },
+  {
+    "camera_id": "VCAM250",
+    "name": "Hyderabad virtual 250",
+    "lat": 17.407843,
+    "lon": 78.391939,
+    "heading": 135,
+    "lanes": 2,
+    "status": "synthetic",
+    "hotspot": false
+  }
+]
