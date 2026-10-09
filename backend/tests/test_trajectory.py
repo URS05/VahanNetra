@@ -26,9 +26,8 @@ def test_trajectory_order_and_osrm_polylines(client):
     for seg in data["segments"]:
         assert seg["kind"] == "inferred"
         assert len(seg["coordinates"]) >= 2
-        assert seg["routing_source"] in ("osrm", "inferred")
-        if seg["routing_source"] == "osrm":
-            assert seg["coordinates"][0] != seg["coordinates"][-1]
+        assert seg["routing_source"] == "osrm"
+        assert seg["coordinates"][0] != seg["coordinates"][-1]
 
 
 def test_fuzzy_search_possible_match(client):

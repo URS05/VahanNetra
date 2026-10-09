@@ -33,6 +33,7 @@ def test_simulate_five_cameras_increasing_timestamps(client):
     segs = r.json()["segments"]
     assert len(segs) == 4
     assert all(s["kind"] == "inferred" for s in segs)
+    assert all(s["routing_source"] == "osrm" for s in segs)
     assert all(len(s["coordinates"]) >= 2 for s in segs)
 
 

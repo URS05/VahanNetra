@@ -179,9 +179,9 @@ def load_osrm_file_cache(db: Session) -> int:
         log.warning("osrm_cache.json not found at %s", path)
         return 0
     try:
-        rows = json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        log.warning("osrm_cache.json is incomplete or still writing, skip file load")
+        rows = json.loads(path.read_text(encoding="utf-8-sig"))
+    except json.JSONDecodeError as exc:
+        log.warning("osrm_cache.json could not be parsed (%s), skip file load", exc)
         return 0
     loaded = 0
     for item in rows:
