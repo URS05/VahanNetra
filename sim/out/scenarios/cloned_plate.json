@@ -1,0 +1,61 @@
+[
+  {
+    "event_id": "sim-clone-01",
+    "plate_text": "TS09CL0001",
+    "plate_confidence": 0.91,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "TS09CL0001",
+        "conf": 0.835
+      },
+      {
+        "frame_idx": 6,
+        "text": "TS09CL0001",
+        "conf": 0.807
+      }
+    ],
+    "camera_id": "CAM01",
+    "timestamp": "2026-10-10T04:30:00Z",
+    "direction": "SE",
+    "lane": 4,
+    "vehicle_type": "car",
+    "vehicle_color": "white",
+    "speed_estimate": 23.0,
+    "plate_image_ref": "simulated",
+    "source": "simulated"
+  },
+  {
+    "event_id": "sim-clone-05",
+    "plate_text": "TS09CL0001",
+    "plate_confidence": 0.9,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "TS09CL0001",
+        "conf": 0.892
+      },
+      {
+        "frame_idx": 6,
+        "text": "TS09CL0001",
+        "conf": 0.864
+      },
+      {
+        "frame_idx": 8,
+        "text": "TS09CL0001",
+        "conf": 0.942
+      }
+    ],
+    "camera_id": "CAM05",
+    "timestamp": "2026-10-10T04:31:00Z",
+    "direction": "S",
+    "lane": 1,
+    "vehicle_type": "car",
+    "vehicle_color": "black",
+    "speed_estimate": 45.0,
+    "plate_image_ref": "simulated",
+    "source": "simulated"
+  }
+]
