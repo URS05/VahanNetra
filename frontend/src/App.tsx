@@ -4,9 +4,11 @@ import { AppShell } from "./components/AppShell";
 import { Panel } from "./components/ui/Panel";
 import { AnalyticsPage } from "./features/analytics/AnalyticsPage";
 import { AuditPage } from "./features/audit/AuditPage";
+import { CameraNetworkPage } from "./features/cameras/CameraNetworkPage";
 import { StillsDemoPage } from "./features/demo/StillsDemoPage";
 import { LivePage } from "./features/live/LivePage";
 import { LoginPage } from "./features/login/LoginPage";
+import { OperationsPage } from "./features/operations/OperationsPage";
 import { canAudit } from "./lib/roles";
 import { useAuth } from "./store/auth";
 
@@ -18,6 +20,8 @@ export function App() {
       <Route element={<RequireAuth />}>
         <Route element={<AppShell />}>
           <Route path="/live" element={<LivePage />} />
+          <Route path="/cameras" element={<CameraNetworkPage />} />
+          <Route path="/operations" element={<OperationsPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/audit" element={<AuditGuard />} />
         </Route>
