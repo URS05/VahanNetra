@@ -219,9 +219,19 @@ export function LivePage() {
   const labels = useMemo(
     () =>
       drawn.flatMap((segment) => {
-        if (segment.kind !== "inferred" || segment.coordinates.length < 2) return [];
+        if (segment.kind !== "inferred" || !Array.isArray(segment.coordinates) || segment.coordinates.length < 2) return [];
         const position = midpoint(segment.coordinates);
-        if (!position) return [];
+        if (
+          !position ||
+          !Array.isArray(position) ||
+          position.length < 2 ||
+          typeof position[0] !== "number" ||
+          typeof position[1] !== "number" ||
+          isNaN(position[0]) ||
+          isNaN(position[1])
+        ) {
+          return [];
+        }
         return [{ id: `${segment.from}-${segment.to}`, position, text: "inferred" }];
       }),
     [drawn],

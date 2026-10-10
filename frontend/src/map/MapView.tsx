@@ -79,49 +79,78 @@ export const MapView = forwardRef<MapHandle, Props>(function MapView(props, ref)
     const map = mapRef.current;
     if (!map) return;
     cameraMarkers.current.forEach((marker) => marker.remove());
-    cameraMarkers.current = props.cameras.map((camera) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "cam-marker";
-      button.textContent = camera.camera_id;
-      button.setAttribute("aria-label", `${camera.camera_id} ${camera.name}`);
-      button.style.cssText = markerStyle(props.selectedId === camera.camera_id, props.pulsedIds.includes(camera.camera_id));
-      button.onclick = () => propsRef.current.onSelect(camera.camera_id);
-      return new maplibregl.Marker({ element: button })
-        .setLngLat([camera.lon, camera.lat])
-        .addTo(map);
-    });
+    cameraMarkers.current = props.cameras
+      .filter((camera) => camera && typeof camera.lon === "number" && typeof camera.lat === "number" && !isNaN(camera.lon) && !isNaN(camera.lat))
+      .map((camera) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "cam-marker";
+        button.textContent = camera.camera_id;
+        button.setAttribute("aria-label", `${camera.camera_id} ${camera.name}`);
+        button.style.cssText = markerStyle(props.selectedId === camera.camera_id, props.pulsedIds.includes(camera.camera_id));
+        button.onclick = () => propsRef.current.onSelect(camera.camera_id);
+        return new maplibregl.Marker({ element: button })
+          .setLngLat([camera.lon, camera.lat])
+          .addTo(map);
+      });
   }, [props.cameras, props.selectedId, props.pulsedIds]);
 
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
     labelMarkers.current.forEach((marker) => marker.remove());
-    labelMarkers.current = props.labels.map((label) => {
-      const el = document.createElement("div");
-      el.textContent = label.text;
-      el.style.cssText =
-        "background:#111;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:2px 6px;font:11px Inter,sans-serif;";
-      return new maplibregl.Marker({ element: el }).setLngLat(label.position).addTo(map);
-    });
+    labelMarkers.current = props.labels
+      .filter(
+        (label) =>
+          label &&
+          Array.isArray(label.position) &&
+          label.position.length >= 2 &&
+          typeof label.position[0] === "number" &&
+          typeof label.position[1] === "number" &&
+          !isNaN(label.position[0]) &&
+          !isNaN(label.position[1]),
+      )
+      .map((label) => {
+        const el = document.createElement("div");
+        el.textContent = label.text;
+        el.style.cssText =
+          "background:#111;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:2px 6px;font:11px Inter,sans-serif;";
+        return new maplibregl.Marker({ element: el }).setLngLat(label.position).addTo(map);
+      });
   }, [props.labels]);
 
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
-    if (!props.vehicle) {
+    if (
+      !props.vehicle ||
+      !Array.isArray(props.vehicle.position) ||
+      props.vehicle.position.length < 2 ||
+      typeof props.vehicle.position[0] !== "number" ||
+      typeof props.vehicle.position[1] !== "number" ||
+      isNaN(props.vehicle.position[0]) ||
+      isNaN(props.vehicle.position[1])
+    ) {
       vehicleMarker.current?.remove();
       vehicleMarker.current = null;
       return;
     }
-    if (!vehicleMarker.current) {
-      const el = document.createElement("div");
-      el.style.cssText =
-        "transform:translateY(-18px);background:#fff;color:#111;border-radius:999px;padding:2px 6px;font:11px Inter,sans-serif;font-weight:600;";
-      vehicleMarker.current = new maplibregl.Marker({ element: el, anchor: "bottom" }).addTo(map);
+    try {
+      const pos: [number, number] = [props.vehicle.position[0], props.vehicle.position[1]];
+      if (!vehicleMarker.current) {
+        const el = document.createElement("div");
+        el.style.cssText =
+          "transform:translateY(-18px);background:#fff;color:#111;border-radius:999px;padding:2px 6px;font:11px Inter,sans-serif;font-weight:600;";
+        vehicleMarker.current = new maplibregl.Marker({ element: el, anchor: "bottom" })
+          .setLngLat(pos)
+          .addTo(map);
+      } else {
+        vehicleMarker.current.setLngLat(pos);
+      }
+      vehicleMarker.current.getElement().textContent = props.vehicle.label;
+    } catch {
+      // Degrade gracefully without crashing
     }
-    vehicleMarker.current.getElement().textContent = props.vehicle.label;
-    vehicleMarker.current.setLngLat(props.vehicle.position);
   }, [props.vehicle]);
 
   useEffect(() => {
