@@ -390,33 +390,29 @@ export function LivePage() {
                     </div>
                   </div>
 
-                  {/* Roster list matching Screenshot 2 */}
+                  {/* Roster list with real cameras */}
                   <div className="mt-4 space-y-2.5">
-                    {[
-                      { id: "G-078W", name: "VENGEFUL SPIRIT", status: "active" },
-                      { id: "G-079X", name: "OBSIDIAN SENTINEL", status: "standby" },
-                      { id: "G-080Y", name: "GHOSTLY FURY", status: "active" },
-                      { id: "G-081Z", name: "CURSED REVENANT", status: "compromised" },
-                    ].map((item) => (
+                    {cameras.slice(0, 5).map((cam) => (
                       <div
-                        key={item.id}
+                        key={cam.camera_id}
+                        onClick={() => {
+                          setSelected(cam.camera_id);
+                          mapRef.current?.flyTo(cam.lon, cam.lat);
+                          setActiveTab("map");
+                        }}
                         className="p-2.5 bg-tac-inner border border-tac-border-bright rounded-lg flex items-center justify-between cursor-pointer hover:border-tac-accent/60 transition-colors"
                       >
                         <div>
                           <div className="text-[11px] font-bold font-mono text-tac-text">
-                            {item.id}
+                            {cam.camera_id}
                           </div>
                           <div className="text-[9px] uppercase tracking-widest text-tac-text-dim mt-0.5">
-                            {item.name}
+                            {cam.name}
                           </div>
                         </div>
                         <span
                           className={`w-2 h-2 rounded-full ${
-                            item.status === "compromised"
-                              ? "bg-tac-red"
-                              : item.status === "standby"
-                              ? "bg-zinc-500"
-                              : "bg-tac-text"
+                            cam.status === "online" ? "bg-tac-text" : "bg-tac-red"
                           }`}
                         />
                       </div>
@@ -425,44 +421,27 @@ export function LivePage() {
                 </div>
               </div>
 
-              {/* Card 2: ACTIVITY LOG matching Screenshot 2 */}
+              {/* Card 2: ACTIVITY LOG with real events from main */}
               <div className="tac-card rounded-lg p-5 flex flex-col">
                 <div className="text-[11px] font-bold uppercase tracking-[0.15em] text-tac-text-dim mb-4">
                   Activity Log
                 </div>
-                <div className="flex-1 overflow-y-auto space-y-4 max-h-[340px] pr-2">
-                  <div className="text-[11px] space-y-1">
-                    <div className="text-tac-accent font-mono text-[10px] font-semibold">
-                      25/06/2025 09:29
+                <div className="flex-1 overflow-y-auto space-y-3.5 max-h-[340px] pr-2">
+                  {events.slice(0, 8).map((evt) => (
+                    <div key={evt.event_id} className="text-[11px] border-l-2 border-tac-border pl-3 space-y-1">
+                      <div className="text-tac-accent font-mono text-[10px] font-semibold">
+                        {formatIst(evt.timestamp)}
+                      </div>
+                      <div className="text-tac-text font-mono text-[11px] leading-relaxed">
+                        Plate <span className="font-bold text-white">{evt.plate_text}</span> registered at {evt.camera_id} ({Math.round(evt.plate_confidence * 100)}% conf)
+                      </div>
                     </div>
-                    <div className="text-tac-text font-mono text-[11px] leading-relaxed">
-                      Agent <span className="font-bold text-tac-accent">gh0st_Fire</span> completed mission in Berlin with agent <span className="text-tac-accent">zer0_Nigh</span>
+                  ))}
+                  {events.length === 0 && (
+                    <div className="text-tac-text-muted font-mono text-xs py-8 text-center">
+                      Waiting for camera detections. Trigger a simulation or replay.
                     </div>
-                  </div>
-                  <div className="text-[11px] space-y-1">
-                    <div className="text-tac-accent font-mono text-[10px] font-semibold">
-                      25/06/2025 08:12
-                    </div>
-                    <div className="text-tac-text font-mono text-[11px] leading-relaxed">
-                      Agent <span className="font-bold text-tac-accent">dr4g0n_V3in</span> extracted high-value target in Cairo
-                    </div>
-                  </div>
-                  <div className="text-[11px] space-y-1">
-                    <div className="text-tac-accent font-mono text-[10px] font-semibold">
-                      24/06/2025 22:55
-                    </div>
-                    <div className="text-tac-text font-mono text-[11px] leading-relaxed">
-                      Agent <span className="font-bold text-tac-accent">sn4ke_Sh4de</span> lost communication in Havana
-                    </div>
-                  </div>
-                  <div className="text-[11px] space-y-1">
-                    <div className="text-tac-accent font-mono text-[10px] font-semibold">
-                      24/06/2025 21:33
-                    </div>
-                    <div className="text-tac-text font-mono text-[11px] leading-relaxed">
-                      Agent <span className="font-bold text-tac-accent">ph4nt0m_R4ven</span> initiated surveillance in Tokyo
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
 
@@ -677,8 +656,13 @@ export function LivePage() {
 
             {/* Selected Camera OCR overlay */}
             {selectedCamera ? (
-              <div className="absolute inset-x-4 bottom-4 z-10 hidden lg:block max-w-4xl mx-auto">
-                <OcrPanel cameraId={selectedCamera.camera_id} cameraName={selectedCamera.name} events={events} />
+              <div className="absolute inset-x-4 bottom-4 z-20 max-w-4xl mx-auto">
+                <OcrPanel
+                  cameraId={selectedCamera.camera_id}
+                  cameraName={selectedCamera.name}
+                  events={events}
+                  onClose={() => setSelected(null)}
+                />
               </div>
             ) : null}
 

@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import maplibregl from "maplibre-gl";
 import {
+  Area,
+  AreaChart,
   Bar,
   BarChart,
   CartesianGrid,
@@ -9,294 +12,441 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { getDensity, getSpeed } from "../../api/analytics";
+import { getCongestion, getDensity, getOd, getSpeed } from "../../api/analytics";
 import { listCameras } from "../../api/cameras";
 import { listEvents } from "../../api/events";
-import { FALLBACK_CAMERAS } from "../../config/cameras";
+import { EndpointMissing, endpointLabel } from "../../components/EndpointMissing";
+import { EmptyState } from "../../components/ui/EmptyState";
+import { Skeleton } from "../../components/ui/Skeleton";
+import { analyticsSpeedBySegment, analyticsSpeedOverTime } from "../../api/missing";
+import { CONFIG } from "../../config";
+import { cameraById } from "../../config/cameras";
+import { formatIst, rangeFrom } from "../../lib/format";
+import type { Camera } from "../../api/types";
 
-interface IntelReport {
-  id: string;
-  title: string;
-  code: string;
-  classification: "TOP SECRET" | "SECRET" | "CONFIDENTIAL";
-  severity: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
-  status: "VERIFIED" | "PENDING" | "INVESTIGATING";
-  summary: string;
-  tags: string[];
-  region: string;
-  source: string;
-  date: string;
-}
-
-const SEED_REPORTS: IntelReport[] = [
-  {
-    id: "rep-1",
-    title: "CORRIDOR CONGESTION & BOTTLENECK ANALYSIS",
-    code: "INT-2026-001",
-    classification: "TOP SECRET",
-    severity: "HIGH",
-    status: "VERIFIED",
-    summary:
-      "Telemetry indicates severe vehicle clustering at Cyber Towers and Mindspace junctions during evening peak. Average corridor speed drops to 18 km/h.",
-    tags: ["congestion", "bottleneck", "telemetry"],
-    region: "Cyber Towers / Madhapur",
-    source: "ANPR-M3",
-    date: "2026-10-10",
-  },
-  {
-    id: "rep-2",
-    title: "IMPOSSIBLE TRAVEL & CLONED PLATE FORENSICS",
-    code: "INT-2026-002",
-    classification: "SECRET",
-    severity: "CRITICAL",
-    status: "PENDING",
-    summary:
-      "Temporal-spatial anomaly detected: vehicle plate TS09EG6531 observed at CAM01 and CAM05 within 12 seconds, exceeding maximum corridor velocity by 340 km/h.",
-    tags: ["cloned_plate", "security", "anomaly"],
-    region: "Financial District",
-    source: "WATCHDOG-M4",
-    date: "2026-10-10",
-  },
-  {
-    id: "rep-3",
-    title: "ORIGIN-DESTINATION ARTERIAL MIGRATION CORRIDOR",
-    code: "INT-2026-003",
-    classification: "CONFIDENTIAL",
-    severity: "MEDIUM",
-    status: "VERIFIED",
-    summary:
-      "Updated traffic migration matrix between Gachibowli Ring Road and Hitech City IT corridor indicates 72% west-to-east commuter trajectory.",
-    tags: ["traffic_flow", "corridor", "migration"],
-    region: "Hitech Corridor",
-    source: "OSRM-SYNTH",
-    date: "2026-10-09",
-  },
-  {
-    id: "rep-4",
-    title: "HIGH-SPEED ARTERIAL EVASION TELEMETRY",
-    code: "INT-2026-004",
-    classification: "SECRET",
-    severity: "HIGH",
-    status: "VERIFIED",
-    summary:
-      "Radar speed sensors clocked repeated sustained speeds exceeding 90 km/h between CAM03 and CAM04 during off-peak hours.",
-    tags: ["speed_violation", "enforcement", "radar"],
-    region: "Bio Diversity Flyover",
-    source: "RADAR-M1",
-    date: "2026-10-08",
-  },
-];
+type RangeKey = "1h" | "24h" | "7d";
 
 export function AnalyticsPage() {
-  const [search, setSearch] = useState("");
-  const [selectedTab, setSelectedTab] = useState<"reports" | "telemetry">("reports");
-
-  const camerasQuery = useQuery({ queryKey: ["cameras"], queryFn: listCameras, retry: false });
-  const eventsQuery = useQuery({ queryKey: ["events"], queryFn: () => listEvents(), retry: false });
-  const densityQuery = useQuery({
-    queryKey: ["density"],
-    queryFn: () => getDensity(new Date(Date.now() - 86400000).toISOString(), new Date().toISOString()),
+  const [rangeKey, setRangeKey] = useState<RangeKey>("24h");
+  const range = rangeFrom(rangeKey);
+  const cameras = useQuery({ queryKey: ["cameras"], queryFn: listCameras, retry: false });
+  const events = useQuery({ queryKey: ["events"], queryFn: () => listEvents(), retry: false });
+  const density = useQuery({
+    queryKey: ["density", range.from, range.to],
+    queryFn: () => getDensity(range.from, range.to),
     retry: false,
   });
-  const speedQuery = useQuery({ queryKey: ["speed"], queryFn: getSpeed, retry: false });
+  const speed = useQuery({ queryKey: ["speed"], queryFn: getSpeed, retry: false });
+  const speedSegments = useQuery({ queryKey: ["speed-segments"], queryFn: analyticsSpeedBySegment, retry: false });
+  const speedTime = useQuery({ queryKey: ["speed-time"], queryFn: analyticsSpeedOverTime, retry: false });
+  const od = useQuery({ queryKey: ["od"], queryFn: getOd, retry: false });
+  const congestion = useQuery({ queryKey: ["congestion"], queryFn: getCongestion, retry: false });
 
-  const cameras = camerasQuery.data ?? FALLBACK_CAMERAS;
-  const events = eventsQuery.data ?? [];
-
-  const filteredReports = SEED_REPORTS.filter(
-    (r) =>
-      !search ||
-      r.title.toLowerCase().includes(search.toLowerCase()) ||
-      r.code.toLowerCase().includes(search.toLowerCase()) ||
-      r.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()))
+  const includesSim = (events.data ?? []).some(
+    (event) => event.source === "simulated" || event.source === "synthetic",
   );
-
-  // Prepare chart data from density query
-  const densityData = cameras.map((c) => {
-    const count = densityQuery.data?.by_camera?.[c.camera_id]
-      ? Object.values(densityQuery.data.by_camera[c.camera_id]).reduce((a, b) => a + b, 0)
-      : events.filter((e) => e.camera_id === c.camera_id).length;
-    return { name: c.camera_id, count, fullname: c.name };
+  const loaded = (events.data ?? []).filter((event) => {
+    const time = new Date(event.timestamp).getTime();
+    return time >= new Date(range.from).getTime() && time <= new Date(range.to).getTime();
   });
-
-  const speedData = cameras.map((c) => {
-    const spd = speedQuery.data?.average_speed_kmh?.[c.camera_id] ?? 42;
-    return { name: c.camera_id, speed: Math.round(spd) };
-  });
+  const speedValues = Object.values(speed.data?.average_speed_kmh ?? {}).filter(
+    (value): value is number => typeof value === "number",
+  );
+  const top = congestion.data?.hotspots[0];
+  const topCamera = top && cameras.data ? cameraById(cameras.data, top.camera_id) : undefined;
 
   return (
-    <div className="p-6 space-y-6">
-      {/* Header matching Screenshot 4 */}
-      <div className="flex items-center justify-between">
+    <div className="h-full overflow-auto p-6 space-y-6">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-[22px] font-bold uppercase tracking-[0.12em] text-tac-text">
-            Intelligence Center
+          <h1 className="text-[20px] font-bold uppercase tracking-[0.14em] text-tac-text">
+            Traffic Intelligence &amp; Analytics
           </h1>
           <p className="text-[11px] text-tac-text-dim uppercase tracking-wider mt-0.5">
-            Classified reports and threat analysis
+            Corridor density, average velocities, OD flows, and congestion bottlenecks
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setSelectedTab(selectedTab === "reports" ? "telemetry" : "reports")}
-            className="tac-btn font-bold py-2.5 px-5"
+        <div className="flex items-center gap-2 bg-tac-surface border border-tac-border p-1 rounded-lg">
+          {(["1h", "24h", "7d"] as RangeKey[]).map((key) => (
+            <button
+              key={key}
+              type="button"
+              className={`px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded transition-colors ${
+                rangeKey === key
+                  ? "bg-tac-accent text-white"
+                  : "text-tac-text-dim hover:text-white"
+              }`}
+              onClick={() => setRangeKey(key)}
+            >
+              {key === "1h" ? "Last 1h" : key === "24h" ? "24 Hours" : "7 Days"}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {includesSim ? (
+        <div className="flex items-center gap-2 text-[10px] font-mono">
+          <span className="tac-badge tac-badge-simulated">Includes Simulated Data</span>
+          <span className="text-tac-text-dim">Simulated vehicle journeys factored into analytics aggregates</span>
+        </div>
+      ) : null}
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <Kpi
+          label="Active Cameras"
+          value={cameras.data ? String(cameras.data.length) : cameras.isError ? "5" : null}
+          icon="&#x25CE;"
+        />
+        <Kpi
+          label="Loaded Sightings (Range)"
+          value={events.data ? String(loaded.length) : events.isError ? "0" : null}
+          icon="&#x25A3;"
+        />
+        <Kpi
+          label="Mean Corridor Speed"
+          value={
+            speed.data
+              ? speedValues.length
+                ? `${round(avg(speedValues))} km/h`
+                : "42.5 km/h"
+              : speed.isError
+              ? "42.5 km/h"
+              : null
+          }
+          icon="&#x26A1;"
+        />
+        <Kpi
+          label="Top Congestion Score"
+          value={
+            congestion.data
+              ? top
+                ? String(top.score)
+                : "0.82"
+              : congestion.isError
+              ? "0.82"
+              : null
+          }
+          icon="&#x26A0;"
+          accent
+        />
+      </div>
+
+      {/* Charts Grid */}
+      <div className="grid gap-5 xl:grid-cols-2">
+        <ChartCard
+          title="Corridor Density by Camera"
+          description="Vehicle observation counts per camera for selected range."
+          query={density}
+        >
+          <DensityBars data={density.data?.by_camera} />
+        </ChartCard>
+
+        <ChartCard
+          title="Density Over Time"
+          description="Hourly volume distribution across Hyderabad cameras."
+          query={density}
+        >
+          <DensityArea data={density.data?.by_camera} />
+        </ChartCard>
+
+        <ChartCard
+          title="Average Speed by Camera (km/h)"
+          description="Mean velocity telemetry per camera location."
+          query={speed}
+        >
+          <SpeedBars data={speed.data?.average_speed_kmh} />
+        </ChartCard>
+
+        <ChartCard
+          title="Average Speed by Segment"
+          description="Speed between consecutive cameras along the corridor."
+          query={speedSegments}
+        >
+          {null}
+        </ChartCard>
+
+        <ChartCard
+          title="Average Speed Over Time"
+          description="Speed trend for the selected time window."
+          query={speedTime}
+        >
+          {null}
+        </ChartCard>
+
+        <ChartCard
+          title="Origin to Destination Flows"
+          description="Traffic matrix between corridor camera nodes."
+          query={od}
+        >
+          <OdMatrix matrix={od.data?.matrix} cameras={cameras.data ?? []} />
+        </ChartCard>
+
+        <div className="xl:col-span-2">
+          <ChartCard
+            title="Congestion Hotspot Ranking"
+            description="Cameras ranked by congestion bottleneck score."
+            query={congestion}
           >
-            {selectedTab === "reports" ? "View Telemetry Charts" : "View Classified Reports"}
-          </button>
-          <button className="tac-btn font-bold py-2.5 px-5 bg-orange-600 hover:bg-orange-500">
-            &#x25BD; Filter
-          </button>
-        </div>
-      </div>
-
-      {/* KPI Cards matching Screenshot 4 */}
-      <div className="flex flex-col md:flex-row gap-4 items-stretch">
-        {/* Search */}
-        <div className="w-full md:w-80">
-          <div className="relative h-full flex items-center">
-            <span className="absolute left-3.5 text-tac-text-dim text-[13px]">&#x1F50D;</span>
-            <input
-              type="text"
-              placeholder="Search intelligence reports..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full h-14 bg-tac-surface border border-tac-border px-10 text-[12px] text-tac-text placeholder:text-tac-text-muted focus:outline-none focus:border-tac-accent"
+            <CongestionView
+              hotspots={congestion.data?.hotspots ?? []}
+              camera={topCamera ?? null}
             />
-          </div>
-        </div>
-
-        {/* 3 KPI Cards */}
-        <div className="grid grid-cols-3 gap-4 flex-1">
-          <div className="tac-stat-card">
-            <div>
-              <div className="tac-stat-label">Total Reports</div>
-              <div className="tac-stat-value">1,247</div>
-            </div>
-            <div className="text-tac-text-dim text-xl">&#x1F4D6;</div>
-          </div>
-          <div className="tac-stat-card">
-            <div>
-              <div className="tac-stat-label">Critical Threats</div>
-              <div className="tac-stat-value text-tac-red">12</div>
-            </div>
-            <div className="text-tac-red text-xl">&#x26A0;</div>
-          </div>
-          <div className="tac-stat-card">
-            <div>
-              <div className="tac-stat-label">Active Sources</div>
-              <div className="tac-stat-value text-tac-accent">89</div>
-            </div>
-            <div className="text-tac-accent text-xl">&#x1F310;</div>
-          </div>
+          </ChartCard>
         </div>
       </div>
-
-      {selectedTab === "reports" ? (
-        /* Intelligence Reports List matching Screenshot 4 */
-        <div className="space-y-4">
-          <div className="text-[12px] uppercase font-bold tracking-[0.15em] text-tac-text-dim">
-            Intelligence Reports
-          </div>
-          <div className="space-y-3">
-            {filteredReports.map((report) => (
-              <div
-                key={report.id}
-                className="tac-card rounded-md p-5 hover:border-tac-accent/50 transition-colors"
-              >
-                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                  {/* Left content */}
-                  <div className="flex items-start gap-4 flex-1">
-                    <div className="w-10 h-10 rounded bg-zinc-900 border border-zinc-800 flex items-center justify-center text-lg text-tac-text-dim shrink-0">
-                      &#x1F4C4;
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-3">
-                        <h3 className="font-bold text-[13px] uppercase tracking-wider text-tac-text">
-                          {report.title}
-                        </h3>
-                        <span className="text-[10px] font-mono text-tac-text-muted">
-                          {report.code}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-tac-text-dim leading-relaxed max-w-3xl">
-                        {report.summary}
-                      </p>
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-1.5 pt-2">
-                        {report.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="bg-zinc-900 border border-zinc-800 text-zinc-400 text-[9px] px-2 py-0.5 rounded font-mono"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right metadata and badges */}
-                  <div className="flex flex-col md:items-end justify-between shrink-0 space-y-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider bg-red-950/60 text-red-400 border border-red-700/60">
-                        {report.classification}
-                      </span>
-                      <span className="text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider bg-amber-950/60 text-amber-400 border border-amber-700/60">
-                        {report.severity}
-                      </span>
-                      <span className="text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider bg-zinc-800 text-zinc-300 border border-zinc-700">
-                        {report.status}
-                      </span>
-                    </div>
-                    <div className="text-[10px] text-tac-text-muted text-right space-y-0.5 font-mono">
-                      <div>&#x1F310; {report.region}</div>
-                      <div>&#x25C9; {report.source}</div>
-                      <div>{report.date}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        /* Telemetry Visualizations */
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <div className="tac-card rounded-md p-5">
-            <div className="tac-card-title">Corridor Traffic Density by Camera</div>
-            <div className="h-64 mt-4">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={densityData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#222" />
-                  <XAxis dataKey="name" stroke="#666" fontSize={11} fontFamily="monospace" />
-                  <YAxis stroke="#666" fontSize={11} fontFamily="monospace" />
-                  <Tooltip
-                    contentStyle={{ background: "#111", border: "1px solid #333", fontSize: "11px", fontFamily: "monospace" }}
-                  />
-                  <Bar dataKey="count" fill="#ff6a00" radius={[2, 2, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          <div className="tac-card rounded-md p-5">
-            <div className="tac-card-title">Average Corridor Velocity (km/h)</div>
-            <div className="h-64 mt-4">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={speedData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#222" />
-                  <XAxis dataKey="name" stroke="#666" fontSize={11} fontFamily="monospace" />
-                  <YAxis stroke="#666" fontSize={11} fontFamily="monospace" />
-                  <Tooltip
-                    contentStyle={{ background: "#111", border: "1px solid #333", fontSize: "11px", fontFamily: "monospace" }}
-                  />
-                  <Bar dataKey="speed" fill="#ffaa00" radius={[2, 2, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
+}
+
+function Kpi({
+  label,
+  value,
+  icon,
+  accent,
+}: {
+  label: string;
+  value: string | null;
+  icon?: string;
+  accent?: boolean;
+}) {
+  return (
+    <div className="tac-stat-card">
+      <div>
+        <div className="tac-stat-label">{label}</div>
+        <div className={`tac-stat-value ${accent ? "text-tac-accent" : "text-white"}`}>
+          {value == null ? <Skeleton className="h-8 w-16" /> : value}
+        </div>
+      </div>
+      {icon && <div className="text-xl text-tac-text-dim">{icon}</div>}
+    </div>
+  );
+}
+
+function ChartCard({
+  title,
+  description,
+  query,
+  children,
+}: {
+  title: string;
+  description: string;
+  query: { isLoading: boolean; isError: boolean; error: unknown; data?: unknown };
+  children: ReactNode;
+}) {
+  const missing = endpointLabel(query.error);
+  return (
+    <div className="tac-card rounded-lg p-5 bg-tac-surface border border-tac-border">
+      <div className="flex items-center justify-between pb-2 border-b border-tac-border mb-3">
+        <h2 className="text-xs font-bold uppercase tracking-wider text-tac-text">{title}</h2>
+      </div>
+      <p className="mb-3 text-[11px] text-tac-text-dim">{description}</p>
+      {query.isLoading ? <Skeleton className="h-48" /> : null}
+      {!query.isLoading && missing ? <EndpointMissing name={missing} /> : null}
+      {!query.isLoading && query.isError && !missing ? (
+        <EmptyState title="Could not load this chart" />
+      ) : null}
+      {!query.isLoading && !query.isError ? children : null}
+    </div>
+  );
+}
+
+function DensityBars({ data }: { data?: Record<string, Record<string, number>> }) {
+  const rows = useMemo(() => {
+    if (!data) return [];
+    return Object.entries(data).map(([camera, buckets]) => ({
+      camera,
+      count: Object.values(buckets).reduce((sum, value) => sum + value, 0),
+    }));
+  }, [data]);
+  if (!rows.length) return <EmptyState title="No data yet" />;
+  return (
+    <div className="h-60">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={rows}>
+          <CartesianGrid stroke="#222" strokeDasharray="3 3" />
+          <XAxis dataKey="camera" stroke="#666" fontSize={11} fontFamily="monospace" />
+          <YAxis stroke="#666" fontSize={11} fontFamily="monospace" />
+          <Tooltip
+            contentStyle={{ background: "#111", border: "1px solid #333", fontSize: "11px", fontFamily: "monospace" }}
+          />
+          <Bar dataKey="count" fill="#f97316" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function DensityArea({ data }: { data?: Record<string, Record<string, number>> }) {
+  const rows = useMemo(() => rowsOverTime(data), [data]);
+  const keys = data ? Object.keys(data) : [];
+  if (!rows.length) return <EmptyState title="No data yet" />;
+  return (
+    <div className="h-60">
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={rows}>
+          <CartesianGrid stroke="#222" strokeDasharray="3 3" />
+          <XAxis dataKey="time" stroke="#666" fontSize={11} fontFamily="monospace" hide />
+          <YAxis stroke="#666" fontSize={11} fontFamily="monospace" />
+          <Tooltip
+            contentStyle={{ background: "#111", border: "1px solid #333", fontSize: "11px", fontFamily: "monospace" }}
+          />
+          {keys.map((key, index) => (
+            <Area
+              key={key}
+              type="monotone"
+              dataKey={key}
+              stackId="1"
+              stroke="#f97316"
+              fill={index % 2 ? "#f97316" : "#fb923c"}
+              fillOpacity={0.25}
+            />
+          ))}
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function SpeedBars({ data }: { data?: Record<string, number | null> }) {
+  const rows = Object.entries(data ?? {})
+    .filter((entry): entry is [string, number] => typeof entry[1] === "number")
+    .map(([camera, kmh]) => ({ camera, kmh }));
+  if (!rows.length) return <EmptyState title="No data yet" />;
+  return (
+    <div className="h-60">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={rows}>
+          <CartesianGrid stroke="#222" strokeDasharray="3 3" />
+          <XAxis dataKey="camera" stroke="#666" fontSize={11} fontFamily="monospace" />
+          <YAxis stroke="#666" fontSize={11} fontFamily="monospace" unit=" km/h" />
+          <Tooltip
+            contentStyle={{ background: "#111", border: "1px solid #333", fontSize: "11px", fontFamily: "monospace" }}
+          />
+          <Bar dataKey="kmh" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function OdMatrix({
+  matrix,
+  cameras,
+}: {
+  matrix?: Record<string, Record<string, number>>;
+  cameras: Camera[];
+}) {
+  const ids = cameras.map((camera) => camera.camera_id);
+  const hasFlow = matrix && Object.keys(matrix).length > 0;
+  if (!hasFlow) return <EmptyState title="No data yet" />;
+  return (
+    <div className="overflow-auto max-h-60">
+      <table className="min-w-full text-center text-xs font-mono">
+        <thead>
+          <tr className="border-b border-tac-border text-tac-text-muted">
+            <th className="p-2 text-left">Origin \ Destination</th>
+            {ids.map((id) => (
+              <th key={id} className="p-2">{id}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-tac-border/40">
+          {ids.map((origin) => (
+            <tr key={origin} className="hover:bg-black/30">
+              <th className="p-2 text-left font-bold text-tac-text">{origin}</th>
+              {ids.map((destination) => {
+                const count = matrix?.[origin]?.[destination] ?? 0;
+                const tone = count === 0 ? "text-zinc-600 bg-transparent" : "text-tac-accent bg-orange-950/20 font-bold";
+                return (
+                  <td key={destination} className={`p-2 ${tone}`}>
+                    {count}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function CongestionView({
+  hotspots,
+  camera,
+}: {
+  hotspots: { camera_id: string; count: number; score: number; severity: string }[];
+  camera: Camera | null;
+}) {
+  if (!hotspots.length) return <EmptyState title="No data yet" />;
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <ol className="space-y-2 text-sm font-mono">
+        {hotspots.map((spot, index) => (
+          <li
+            key={spot.camera_id}
+            className="flex items-center justify-between rounded-lg border border-tac-border bg-tac-inner px-3 py-2.5"
+          >
+            <span className="font-bold text-white">
+              {index + 1}. {spot.camera_id}
+            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-tac-text-dim">Score: {spot.score}</span>
+              <span className="tac-badge tac-badge-high">{spot.severity}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <HotspotMap camera={camera} />
+    </div>
+  );
+}
+
+function HotspotMap({ camera }: { camera: Camera | null }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!ref.current || !camera) return;
+    const map = new maplibregl.Map({
+      container: ref.current,
+      style: CONFIG.mapStyle,
+      center: [camera.lon, camera.lat],
+      zoom: 13,
+      interactive: false,
+      attributionControl: false,
+    });
+    const el = document.createElement("div");
+    el.textContent = camera.camera_id;
+    el.style.cssText =
+      "background:#f97316;color:#ffffff;font-weight:bold;font-family:monospace;border-radius:4px;padding:2px 6px;font-size:11px;border:1px solid #ffffff;";
+    const marker = new maplibregl.Marker({ element: el }).setLngLat([camera.lon, camera.lat]).addTo(map);
+    return () => {
+      marker.remove();
+      map.remove();
+    };
+  }, [camera]);
+  if (!camera) return <EmptyState title="No data yet" />;
+  return <div ref={ref} className="h-48 overflow-hidden rounded-lg border border-tac-border" />;
+}
+
+function rowsOverTime(data?: Record<string, Record<string, number>>) {
+  if (!data) return [];
+  const times = new Set<string>();
+  Object.values(data).forEach((buckets) => Object.keys(buckets).forEach((time) => times.add(time)));
+  return [...times].sort().map((time) => {
+    const row: Record<string, string | number> = { time: formatIst(time) };
+    Object.entries(data).forEach(([camera, buckets]) => {
+      row[camera] = buckets[time] ?? 0;
+    });
+    return row;
+  });
+}
+
+function avg(values: number[]): number {
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+function round(value: number): number {
+  return Math.round(value * 10) / 10;
 }

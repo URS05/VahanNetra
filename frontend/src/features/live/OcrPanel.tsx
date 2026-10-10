@@ -1,67 +1,164 @@
+import { useState } from "react";
 import type { Event } from "../../api/types";
 import { SourceTag } from "../../components/SourceTag";
 import { EmptyState } from "../../components/ui/EmptyState";
-import { Panel } from "../../components/ui/Panel";
 import { formatIst, formatPct } from "../../lib/format";
 import { normalizePlate } from "../../lib/plates";
 
-export function OcrPanel({ cameraId, cameraName, events }: { cameraId: string; cameraName: string; events: Event[] }) {
+export function OcrPanel({
+  cameraId,
+  cameraName,
+  events,
+  onClose,
+}: {
+  cameraId: string;
+  cameraName: string;
+  events: Event[];
+  onClose?: () => void;
+}) {
+  const [videoError, setVideoError] = useState(false);
   const rows = events
     .filter((event) => event.camera_id === cameraId)
     .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
   const latest = rows[0];
+
   return (
-    <Panel title={`Camera OCR · ${cameraId}`}>
-      <p className="mb-2 text-xs text-white/60">{cameraName}</p>
-      {!latest ? <EmptyState title="No frames received for this camera yet" /> : null}
-      {latest ? (
-        <div className="grid gap-3 md:grid-cols-[1.4fr_0.8fr]">
-          <div className="overflow-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="text-white/50">
+    <div className="tac-card rounded-lg p-4 bg-tac-surface border border-tac-border shadow-xl">
+      {/* Header */}
+      <div className="flex items-center justify-between pb-3 border-b border-tac-border mb-3">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-tac-accent animate-pulse" />
+          <h2 className="text-xs font-bold uppercase tracking-wider text-tac-text">
+            Camera Feed &amp; OCR · {cameraId}
+          </h2>
+          <span className="text-[11px] text-tac-text-dim">({cameraName})</span>
+        </div>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="text-tac-text-dim hover:text-tac-accent text-sm px-1.5 py-0.5 rounded transition-colors"
+          >
+            &#x2715;
+          </button>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Left: Camera Feed Media */}
+        <div className="rounded-lg overflow-hidden border border-tac-border bg-black relative flex items-center justify-center min-h-[180px]">
+          {cameraId === "CAM01" && !videoError ? (
+            <video
+              src="/videos/CAM01.mp4"
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover max-h-56"
+              onError={() => setVideoError(true)}
+            />
+          ) : (
+            <img
+              src={`/stills/${cameraId}.png`}
+              alt={`${cameraName} feed`}
+              className="w-full h-full object-cover max-h-56"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = "/stills/CAM01.png";
+              }}
+            />
+          )}
+          <div className="absolute top-2 left-2 bg-black/80 border border-tac-border px-2 py-0.5 rounded text-[9px] font-mono text-tac-accent uppercase">
+            LIVE FEED · {cameraId}
+          </div>
+        </div>
+
+        {/* Center: Raw Frame OCR Reads */}
+        <div className="overflow-auto max-h-56 pr-1">
+          <div className="text-[10px] uppercase font-bold text-tac-text-muted mb-1.5 tracking-wider">
+            Raw OCR Frame Votes
+          </div>
+          {!latest ? (
+            <EmptyState title="No frames received yet" />
+          ) : (
+            <table className="w-full text-left text-[11px] font-mono">
+              <thead className="text-[10px] text-tac-text-muted border-b border-tac-border">
                 <tr>
-                  <th className="py-1 pr-2">Frame</th>
-                  <th className="py-1 pr-2">Read</th>
-                  <th className="py-1">Confidence</th>
+                  <th className="py-1">Frame</th>
+                  <th className="py-1">Read</th>
+                  <th className="py-1 text-right">Conf</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-tac-border/40">
                 {latest.raw_reads.length ? (
                   latest.raw_reads.map((read) => {
                     const disagreed = normalizePlate(read.text) !== normalizePlate(latest.plate_text);
                     return (
-                      <tr key={`${latest.event_id}-${read.frame_idx}-${read.text}`} className={disagreed ? "bg-amber-200/10" : ""}>
-                        <td className="py-1 pr-2 font-mono">{read.frame_idx}</td>
-                        <td className="py-1 pr-2 font-mono">
+                      <tr
+                        key={`${latest.event_id}-${read.frame_idx}-${read.text}`}
+                        className={disagreed ? "bg-amber-950/20 text-amber-300" : "text-tac-text"}
+                      >
+                        <td className="py-1 text-tac-text-muted">{read.frame_idx}</td>
+                        <td className="py-1 font-bold">
                           {read.text || "blank"}
-                          {disagreed ? <span className="ml-2 text-amber-100">disagreed</span> : null}
+                          {disagreed && (
+                            <span className="ml-1 text-[8px] text-tac-accent uppercase border border-tac-accent/40 px-1 rounded">
+                              diff
+                            </span>
+                          )}
                         </td>
-                        <td className="py-1 font-mono">{formatPct(read.conf)}</td>
+                        <td className="py-1 text-right text-tac-text-dim">{formatPct(read.conf)}</td>
                       </tr>
                     );
                   })
                 ) : (
                   <tr>
-                    <td colSpan={3} className="py-2 text-white/50">No frames received for this camera yet</td>
+                    <td colSpan={3} className="py-2 text-tac-text-muted">
+                      No raw frame reads recorded
+                    </td>
                   </tr>
                 )}
               </tbody>
             </table>
-            <p className="mt-1 font-mono text-[11px] text-white/40">{formatIst(latest.timestamp)}</p>
-          </div>
-          <div>
-            <p className="text-xs uppercase tracking-wide text-white/50">Voted plate</p>
-            <p className="font-mono text-2xl">{latest.plate_text}</p>
-            <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
-              <div className="h-full bg-white" style={{ width: `${Math.round(latest.plate_confidence * 100)}%` }} />
-            </div>
-            <p className="mt-1 text-xs text-white/60">{formatPct(latest.plate_confidence)} confidence</p>
-            <div className="mt-2">
-              <SourceTag source={latest.source} />
-            </div>
-          </div>
+          )}
         </div>
-      ) : null}
-    </Panel>
+
+        {/* Right: Voted Plate & Confidence */}
+        <div className="flex flex-col justify-between bg-tac-inner border border-tac-border p-3.5 rounded-lg">
+          {latest ? (
+            <>
+              <div>
+                <span className="text-[10px] uppercase tracking-wider text-tac-text-muted font-bold">
+                  Voted Plate Result
+                </span>
+                <p className="font-mono text-xl font-bold text-tac-accent mt-1 tracking-wider">
+                  {latest.plate_text}
+                </p>
+                <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-zinc-800">
+                  <div
+                    className="h-full bg-tac-accent transition-all duration-300"
+                    style={{ width: `${Math.round(latest.plate_confidence * 100)}%` }}
+                  />
+                </div>
+                <div className="flex justify-between items-center text-[10px] text-tac-text-dim mt-1.5 font-mono">
+                  <span>Confidence:</span>
+                  <span className="font-bold text-white">{formatPct(latest.plate_confidence)}</span>
+                </div>
+              </div>
+
+              <div className="mt-3 pt-2.5 border-t border-tac-border flex items-center justify-between">
+                <span className="text-[10px] font-mono text-tac-text-muted">
+                  {formatIst(latest.timestamp)}
+                </span>
+                <SourceTag source={latest.source} />
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-6 text-xs text-tac-text-muted">
+              Select a camera to inspect OCR telemetry
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
