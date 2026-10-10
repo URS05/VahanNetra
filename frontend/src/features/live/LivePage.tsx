@@ -19,7 +19,6 @@ import { runSimulate } from "../../api/simulate";
 import { getTrajectory } from "../../api/trajectory";
 import type { AlertItem, Event, Trajectory } from "../../api/types";
 import { SourceTag } from "../../components/SourceTag";
-import { Button } from "../../components/ui/Button";
 import { EmptyState } from "../../components/ui/EmptyState";
 import { Panel } from "../../components/ui/Panel";
 import { FALLBACK_CAMERAS, cameraById } from "../../config/cameras";
@@ -68,9 +67,10 @@ export function LivePage() {
   const client = useQueryClient();
   const mapRef = useRef<MapHandle>(null);
 
-  const [activeTab, setActiveTab] = useState<"dashboard" | "map">("dashboard");
-  const [selected, setSelected] = useState<string | null>(null);
-  const [drawer, setDrawer] = useState<"tools" | "feed" | null>(null);
+  // Default to Tactical Map directly so map and travel path are immediate centerpiece
+  const [activeTab, setActiveTab] = useState<"map" | "dashboard">("map");
+  const [selected, setSelected] = useState<string | null>("CAM01");
+  const [showOcr, setShowOcr] = useState(true);
   const [mapError, setMapError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [run, setRun] = useState<Run | null>(null);
@@ -246,7 +246,13 @@ export function LivePage() {
     } catch (err) {
       setTrajectory(null);
       setTrajSegments([]);
-      setTrajError(err instanceof ApiError && err.status === 403 ? "Not permitted for your role" : err instanceof Error ? err.message : "Trajectory failed");
+      setTrajError(
+        err instanceof ApiError && err.status === 403
+          ? "Not permitted for your role"
+          : err instanceof Error
+          ? err.message
+          : "Trajectory failed",
+      );
     } finally {
       setTrajLoading(false);
     }
@@ -264,7 +270,9 @@ export function LivePage() {
         preset: input.preset,
       });
       const segments = await resolveRoads(result.segments, cameras);
-      const drawable = flattenPath(segments.filter((segment) => segment.coordinates.length >= 2).map((segment) => segment.coordinates));
+      const drawable = flattenPath(
+        segments.filter((segment) => segment.coordinates.length >= 2).map((segment) => segment.coordinates),
+      );
       if (result.events.length > 1 && drawable.length < 2) {
         pushToast("Road geometry unavailable", "error");
       }
@@ -277,12 +285,28 @@ export function LivePage() {
       });
       setPlaying(true);
       setActiveTab("map");
+      if (input.cameraOrder[0]) {
+        setSelected(input.cameraOrder[0]);
+        setShowOcr(true);
+      }
     } catch (err) {
       pushToast(err instanceof ApiError ? err.detail : "Simulate failed", "error");
     } finally {
       setBusy(false);
     }
   }
+
+  // Preload and auto-animate the Hero mock travel path on mount
+  const autoSimRef = useRef(false);
+  useEffect(() => {
+    if (autoSimRef.current || cameras.length === 0) return;
+    autoSimRef.current = true;
+    void simulate({
+      plate: "TS09VN2612",
+      preset: "normal_trip",
+      cameraOrder: ["CAM01", "CAM02", "CAM03", "CAM04", "CAM05"],
+    });
+  }, [cameras]);
 
   function openAlert(alert: AlertItem) {
     const camera = cameraById(cameras, alert.camera_id);
@@ -294,23 +318,97 @@ export function LivePage() {
 
   return (
     <div className="relative h-full flex flex-col bg-tac-bg text-tac-text overflow-hidden">
-      {/* Subheader Toolbar */}
-      <div className="h-12 border-b border-tac-border px-6 flex items-center justify-between bg-tac-bg shrink-0">
-        <div className="flex items-center gap-4">
-          <span className="text-[14px] font-bold uppercase tracking-[0.12em] text-tac-text">
-            Command Center
-          </span>
-          <div className="flex items-center bg-zinc-900 border border-zinc-800 p-0.5 rounded">
+      {/* Subheader Toolbar with Live Corridor Telemetry and Preset Triggers */}
+      <div className="min-h-12 border-b border-tac-border px-4 py-2 flex flex-wrap items-center justify-between bg-tac-bg shrink-0 gap-2">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-xs font-bold uppercase tracking-wider text-white">
+              Hitech City: Financial District Corridor
+            </span>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2 font-mono text-[10px] text-tac-text-dim border-l border-tac-border pl-3">
+            <span className="text-emerald-400 font-bold">5/5 ONLINE</span>
+            <span>|</span>
+            <span>{events.length} SIGHTINGS</span>
+            <span>|</span>
+            <span className={incoming.length > 0 ? "text-tac-accent font-bold" : ""}>
+              {incoming.length} ALERTS
+            </span>
+            {run && (
+              <>
+                <span>|</span>
+                <span className="text-tac-accent font-bold uppercase">
+                  ACTIVE: {run.events[0]?.plate_text ?? "HERO"} ({playing ? "MOVING" : "STOPPED"})
+                </span>
+              </>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {/* Quick Mock Scenarios */}
+          <div className="flex items-center gap-1.5 bg-tac-inner border border-tac-border p-1 rounded">
+            <span className="text-[9px] uppercase font-bold text-tac-text-muted px-1 hidden md:inline">
+              Mock Paths:
+            </span>
             <button
-              onClick={() => setActiveTab("dashboard")}
-              className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded transition-colors ${
-                activeTab === "dashboard"
-                  ? "bg-tac-accent text-black font-bold"
-                  : "text-zinc-400 hover:text-white"
-              }`}
+              onClick={() => {
+                setActiveTab("map");
+                void simulate({
+                  plate: "TS09VN2612",
+                  preset: "normal_trip",
+                  cameraOrder: ["CAM01", "CAM02", "CAM03", "CAM04", "CAM05"],
+                });
+              }}
+              className="px-2 py-1 text-[9px] font-mono font-bold rounded bg-tac-surface border border-tac-border hover:border-tac-accent hover:text-white transition-colors text-tac-text"
+              title="Simulate Hero Vehicle across CAM01 to CAM05"
             >
-              Overview
+              &#x25B6; Hero Path (CAM01-05)
             </button>
+
+            <button
+              onClick={() => {
+                setActiveTab("map");
+                void simulate({
+                  plate: "TS09CL0001",
+                  preset: "cloned_plate",
+                  cameraOrder: ["CAM01", "CAM05"],
+                });
+              }}
+              className="px-2 py-1 text-[9px] font-mono font-bold rounded bg-tac-surface border border-tac-border hover:border-amber-500 hover:text-amber-400 transition-colors text-tac-text"
+              title="Simulate Cloned Plate Anomaly (CAM01 to CAM05 in 90s)"
+            >
+              &#x26A1; Cloned Plate
+            </button>
+
+            <button
+              onClick={() => {
+                setActiveTab("map");
+                void simulate({
+                  plate: "TS09VN2612",
+                  preset: "fuzzy_plate",
+                  cameraOrder: ["CAM01", "CAM02", "CAM03", "CAM04", "CAM05"],
+                });
+              }}
+              className="px-2 py-1 text-[9px] font-mono font-bold rounded bg-tac-surface border border-tac-border hover:border-blue-500 hover:text-blue-400 transition-colors text-tac-text"
+              title="Simulate Fuzzy Plate Match with single character diff"
+            >
+              &#x26A0; Fuzzy Match
+            </button>
+
+            <button
+              onClick={() => mapRef.current?.fit()}
+              className="px-2 py-1 text-[9px] font-mono font-bold rounded bg-tac-surface border border-tac-border hover:text-white transition-colors text-tac-text-muted"
+              title="Reset map view to fit all corridor cameras"
+            >
+              &#x27F3; Fit
+            </button>
+          </div>
+
+          {/* View Mode Toggle */}
+          <div className="flex items-center bg-zinc-900 border border-zinc-800 p-0.5 rounded">
             <button
               onClick={() => setActiveTab("map")}
               className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded transition-colors ${
@@ -321,82 +419,63 @@ export function LivePage() {
             >
               Tactical Map
             </button>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          {allowed && (
             <button
-              onClick={() => {
-                setActiveTab("map");
-                setDrawer(drawer === "tools" ? null : "tools");
-              }}
-              className="tac-btn py-1.5 px-3 text-[10px] font-bold"
+              onClick={() => setActiveTab("dashboard")}
+              className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded transition-colors ${
+                activeTab === "dashboard"
+                  ? "bg-tac-accent text-black font-bold"
+                  : "text-zinc-400 hover:text-white"
+              }`}
             >
-              &#x25B6; Simulate Journey
+              Overview
             </button>
-          )}
-          <button
-            onClick={() => {
-              setActiveTab("map");
-              setDrawer(drawer === "feed" ? null : "feed");
-            }}
-            className="tac-btn-outline tac-btn py-1.5 px-3 text-[10px] font-bold"
-          >
-            &#x25CE; Live Sightings
-          </button>
+          </div>
         </div>
       </div>
 
-      {/* Main Tab Content */}
+      {/* Main Content Area */}
       <div className="flex-1 relative overflow-auto">
         {activeTab === "dashboard" ? (
-          /* ================= SCREENSHOT 2 & 3: TACTICAL OPS COMMAND DASHBOARD ================= */
+          /* ================= TACTICAL OPS COMMAND DASHBOARD ================= */
           <div className="p-6 space-y-6 max-w-[1600px] mx-auto">
             {/* Top Row: 3 Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Card 1: AGENT ALLOCATION matching Screenshot 2/3 */}
+              {/* Card 1: AGENT ALLOCATION */}
               <div className="tac-card rounded-lg p-5 flex flex-col justify-between">
                 <div>
                   <div className="text-[11px] font-bold uppercase tracking-[0.15em] text-tac-text-dim mb-4">
                     Agent Allocation
                   </div>
 
-                  {/* 3 Top Numbers */}
                   <div className="grid grid-cols-3 gap-2 pb-4 border-b border-tac-border">
                     <div>
-                      <div className="text-[26px] font-bold font-mono text-tac-text">
-                        190
-                      </div>
+                      <div className="text-[26px] font-bold font-mono text-tac-text">190</div>
                       <div className="text-[9px] uppercase tracking-wider text-tac-text-muted mt-0.5">
                         Active Field
                       </div>
                     </div>
                     <div>
-                      <div className="text-[26px] font-bold font-mono text-tac-text">
-                        990
-                      </div>
+                      <div className="text-[26px] font-bold font-mono text-tac-text">990</div>
                       <div className="text-[9px] uppercase tracking-wider text-tac-text-muted mt-0.5">
                         Undercover
                       </div>
                     </div>
                     <div>
-                      <div className="text-[26px] font-bold font-mono text-tac-text">
-                        290
-                      </div>
+                      <div className="text-[26px] font-bold font-mono text-tac-text">290</div>
                       <div className="text-[9px] uppercase tracking-wider text-tac-text-muted mt-0.5">
                         Training
                       </div>
                     </div>
                   </div>
 
-                  {/* Roster list with real cameras */}
+                  {/* Camera Roster */}
                   <div className="mt-4 space-y-2.5">
                     {cameras.slice(0, 5).map((cam) => (
                       <div
                         key={cam.camera_id}
                         onClick={() => {
                           setSelected(cam.camera_id);
+                          setShowOcr(true);
                           mapRef.current?.flyTo(cam.lon, cam.lat);
                           setActiveTab("map");
                         }}
@@ -421,7 +500,7 @@ export function LivePage() {
                 </div>
               </div>
 
-              {/* Card 2: ACTIVITY LOG with real events from main */}
+              {/* Card 2: ACTIVITY LOG */}
               <div className="tac-card rounded-lg p-5 flex flex-col">
                 <div className="text-[11px] font-bold uppercase tracking-[0.15em] text-tac-text-dim mb-4">
                   Activity Log
@@ -445,47 +524,40 @@ export function LivePage() {
                 </div>
               </div>
 
-              {/* Card 3: ENCRYPTED CHAT ACTIVITY matching Screenshot 2 */}
+              {/* Card 3: ENCRYPTED RADAR ACTIVITY */}
               <div className="tac-card rounded-lg p-5 flex flex-col justify-between">
                 <div className="text-[11px] font-bold uppercase tracking-[0.15em] text-tac-text-dim mb-3">
-                  Encrypted Chat Activity
+                  Encrypted Radar Activity
                 </div>
 
-                {/* Radar Graphic */}
                 <div className="flex justify-center my-2">
                   <div className="relative w-36 h-36 rounded-full border border-zinc-700 flex items-center justify-center">
-                    {/* Concentric rings */}
                     <div className="w-24 h-24 rounded-full border border-zinc-800 absolute" />
                     <div className="w-12 h-12 rounded-full border border-zinc-800 absolute" />
-                    {/* Crosshairs */}
                     <div className="w-full h-px bg-zinc-800 absolute" />
                     <div className="h-full w-px bg-zinc-800 absolute" />
-                    {/* Sweeping line */}
                     <div className="absolute inset-0 rounded-full animate-spin" style={{ animationDuration: "4s" }}>
                       <div className="w-1/2 h-0.5 bg-gradient-to-r from-transparent to-tac-accent origin-right" />
                     </div>
-                    {/* Center blip */}
                     <div className="w-2 h-2 rounded-full bg-tac-accent animate-ping" />
                   </div>
                 </div>
 
-                {/* Terminal Console Text matching Screenshot 2 */}
                 <div className="bg-[#0d0d0d] border border-tac-border p-3.5 rounded-lg font-mono text-[10px] space-y-1.5 mt-2">
-                  <div className="text-zinc-500"># 2025-06-17 14:23 UTC</div>
-                  <div className="text-tac-text">&gt; [AGT:gh0stfire] ::: INIT &gt;&gt; ^^^ loading secure channel</div>
-                  <div className="text-tac-accent">&gt; CH#2 | 1231.9082464.500...xR3</div>
-                  <div className="text-zinc-400">&gt; KEY LOCKED</div>
-                  <div className="text-zinc-300">&gt; MSG &gt;&gt; &quot;...mission override initiated... awaiting delta node clearance&quot;</div>
+                  <div className="text-zinc-500"># 2026-10-10 12:20 IST</div>
+                  <div className="text-tac-text">&gt; [NETRA:HYD-CORRIDOR] ::: 5 CAMERAS STREAMING</div>
+                  <div className="text-tac-accent">&gt; ANPR SYNC | HITEC - FINANCIAL DISTRICT</div>
+                  <div className="text-zinc-400">&gt; OSRM CACHE LOADED (ROADS SNAPPED)</div>
+                  <div className="text-zinc-300">&gt; MSG &gt;&gt; &quot;Ready for live multi-camera plate tracking&quot;</div>
                 </div>
               </div>
             </div>
 
-            {/* Bottom Row: 2 Cards */}
+            {/* Bottom Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Left: MISSION ACTIVITY OVERVIEW */}
               <div className="md:col-span-2 tac-card rounded-lg p-5">
                 <div className="text-[11px] font-bold uppercase tracking-[0.15em] text-tac-text-dim mb-4">
-                  Mission Activity Overview
+                  Corridor Activity Overview
                 </div>
                 <div className="h-60 w-full mt-2">
                   <ResponsiveContainer width="100%" height="100%">
@@ -502,58 +574,55 @@ export function LivePage() {
                   </ResponsiveContainer>
                 </div>
                 <div className="flex justify-between items-center text-[10px] text-tac-text-muted mt-2 font-mono px-4">
-                  <span>Jan 28, 2025</span>
-                  <span>Feb 28, 2025</span>
+                  <span>Hitech City</span>
+                  <span>Financial District</span>
                 </div>
               </div>
 
-              {/* Right: MISSION INFORMATION matching Screenshot 2/3 */}
               <div className="tac-card rounded-lg p-5 flex flex-col justify-between">
                 <div className="text-[11px] font-bold uppercase tracking-[0.15em] text-tac-text-dim mb-4">
-                  Mission Information
+                  Mission Statistics
                 </div>
 
                 <div className="space-y-6">
-                  {/* Successful Missions */}
                   <div className="space-y-2.5">
                     <div className="flex items-center gap-2 text-[11px] font-bold uppercase text-tac-text">
                       <span className="w-2 h-2 rounded-full bg-white" />
-                      <span>Successful Missions</span>
+                      <span>Plate Tracking Accuracy</span>
                     </div>
                     <div className="space-y-2 text-[10px] pl-4 font-mono text-tac-text-dim">
                       <div className="flex justify-between">
-                        <span>High Risk Mission</span>
+                        <span>High Confidence (&gt;90%)</span>
                         <span className="text-white font-bold">190</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Medium Risk Mission</span>
+                        <span>Medium Confidence</span>
                         <span className="text-white font-bold">426</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Low Risk Mission</span>
-                        <span className="text-white font-bold">920</span>
+                        <span>Fuzzy Plate Matches</span>
+                        <span className="text-white font-bold">12</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Failed Missions */}
                   <div className="space-y-2.5 pt-3 border-t border-tac-border">
                     <div className="flex items-center gap-2 text-[11px] font-bold uppercase text-tac-red">
                       <span className="w-2 h-2 rounded-full bg-tac-red" />
-                      <span>Failed Missions</span>
+                      <span>Security Watchlist</span>
                     </div>
                     <div className="space-y-2 text-[10px] pl-4 font-mono text-tac-text-dim">
                       <div className="flex justify-between">
-                        <span>High Risk Mission</span>
-                        <span className="text-white font-bold">190</span>
+                        <span>Watchlist Plates</span>
+                        <span className="text-white font-bold">3</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Medium Risk Mission</span>
-                        <span className="text-white font-bold">426</span>
+                        <span>Active Trajectories</span>
+                        <span className="text-white font-bold">1</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Low Risk Mission</span>
-                        <span className="text-white font-bold">920</span>
+                        <span>Cloned Plate Violations</span>
+                        <span className="text-white font-bold">1</span>
                       </div>
                     </div>
                   </div>
@@ -563,20 +632,23 @@ export function LivePage() {
                   onClick={() => setActiveTab("map")}
                   className="tac-btn w-full mt-4 justify-center py-2 text-[10px] font-bold"
                 >
-                  Open Tactical Map &gt;&gt;
+                  Return to Tactical Map &gt;&gt;
                 </button>
               </div>
             </div>
           </div>
         ) : (
-          /* ================= FULL TACTICAL MAP VIEW ================= */
+          /* ================= FULL TACTICAL MAP WITH DATA & TOP-RIGHT OCR ================= */
           <div className="relative w-full h-full">
             <MapView
               ref={mapRef}
               cameras={cameras}
               selectedId={selected}
               pulsedIds={pulsed}
-              onSelect={setSelected}
+              onSelect={(id) => {
+                setSelected(id);
+                setShowOcr(true);
+              }}
               heatReal={heat.real}
               heatSim={heat.sim}
               heatSynth={heat.synth}
@@ -588,8 +660,8 @@ export function LivePage() {
               onStyleError={setMapError}
             />
 
-            {/* Left Drawer Panels */}
-            <div className="absolute left-4 top-4 z-10 hidden w-[340px] max-h-[calc(100%-32px)] space-y-3 overflow-auto lg:block">
+            {/* Left Drawer Panels: Search, Simulation Player, Trajectory, Watchlist */}
+            <div className="absolute left-4 top-4 z-10 hidden w-[340px] max-h-[calc(100%-80px)] space-y-3 overflow-y-auto lg:block scrollbar-none">
               {allowed ? (
                 <>
                   <SearchPanel events={events} onOpen={(value) => void openPlate(value)} />
@@ -626,45 +698,104 @@ export function LivePage() {
               ) : null}
             </div>
 
-            {/* Right Feed Panel */}
-            <div className="absolute right-4 top-4 z-10 hidden w-[320px] max-h-[calc(100%-120px)] space-y-3 overflow-auto lg:block">
+            {/* Right Panel: NUMBER PLATE RECOGNITION (TOP RIGHT) + Sightings Stream */}
+            <div className="absolute right-4 top-4 z-10 hidden w-[380px] max-h-[calc(100%-80px)] space-y-3 overflow-y-auto lg:block scrollbar-none">
+              {/* Relocated Number Plate Recognition (ANPR / OCR) */}
+              {selectedCamera && showOcr && (
+                <OcrPanel
+                  cameraId={selectedCamera.camera_id}
+                  cameraName={selectedCamera.name}
+                  events={events}
+                  cameras={cameras}
+                  onSelectCamera={(id) => {
+                    setSelected(id);
+                    const cam = cameraById(cameras, id);
+                    if (cam) mapRef.current?.flyTo(cam.lon, cam.lat);
+                  }}
+                  onClose={() => setShowOcr(false)}
+                />
+              )}
+
+              {!showOcr && (
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => setShowOcr(true)}
+                    className="tac-btn py-1 px-3 text-[10px] font-mono font-bold"
+                  >
+                    &#x25C9; Show Plate Recognition
+                  </button>
+                </div>
+              )}
+
+              {/* Sightings Stream */}
               <Panel title="Sightings Stream">
-                {!run ? <EmptyState title="No active journey" detail="Simulated sightings appear here as the vehicle traverses cameras." /> : null}
-                {run && revealedEvents.length === 0 ? <p className="text-xs text-white/60">Waiting for vehicle to reach camera...</p> : null}
+                {!run ? (
+                  <EmptyState
+                    title="No active journey"
+                    detail="Simulated sightings appear here as the vehicle traverses cameras."
+                  />
+                ) : null}
+                {run && revealedEvents.length === 0 ? (
+                  <p className="text-xs text-white/60">Waiting for vehicle to reach camera...</p>
+                ) : null}
                 <ul className="space-y-2">
                   {revealedEvents.map((event) => (
-                    <li key={event.event_id} className="rounded border border-tac-border p-2 bg-tac-surface">
+                    <li
+                      key={event.event_id}
+                      onClick={() => {
+                        setSelected(event.camera_id);
+                        setShowOcr(true);
+                        const cam = cameraById(cameras, event.camera_id);
+                        if (cam) mapRef.current?.flyTo(cam.lon, cam.lat);
+                      }}
+                      className="rounded border border-tac-border p-2 bg-tac-surface hover:border-tac-accent/70 transition-colors cursor-pointer"
+                    >
                       <div className="flex items-center justify-between">
                         <p className="font-mono text-xs font-bold text-tac-text">{event.plate_text}</p>
                         <SourceTag source={event.source} />
                       </div>
-                      <p className="text-[10px] text-tac-text-dim mt-0.5">{event.camera_id} · {Math.round(event.plate_confidence * 100)}%</p>
+                      <p className="text-[10px] text-tac-text-dim mt-0.5">
+                        {event.camera_id} · {Math.round(event.plate_confidence * 100)}%
+                      </p>
                       <p className="font-mono text-[9px] text-tac-text-muted">{formatIst(event.timestamp)}</p>
                     </li>
                   ))}
                 </ul>
               </Panel>
+
+              {/* Corridor Legend */}
               <Legend includesSim={includesSim} unlabeled={heat.unlabeled} />
             </div>
 
-            {/* Map fit button */}
-            <div className="absolute bottom-6 left-4 z-10 hidden lg:block">
-              <Button variant="ghost" onClick={() => mapRef.current?.fit()} className="text-[11px] font-mono">
-                Fit to cameras
-              </Button>
+            {/* Bottom Floating Camera Quick Selector Bar */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5 bg-tac-surface/90 backdrop-blur-md border border-tac-border px-3 py-1.5 rounded-full shadow-lg">
+              <span className="text-[9px] font-mono uppercase text-tac-text-muted font-bold mr-1">
+                Cameras:
+              </span>
+              {cameras.map((cam) => (
+                <button
+                  key={cam.camera_id}
+                  onClick={() => {
+                    setSelected(cam.camera_id);
+                    setShowOcr(true);
+                    mapRef.current?.flyTo(cam.lon, cam.lat);
+                  }}
+                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono transition-colors ${
+                    selected === cam.camera_id
+                      ? "bg-tac-accent text-black font-extrabold"
+                      : "bg-tac-inner text-tac-text-dim hover:text-white border border-tac-border"
+                  }`}
+                >
+                  {cam.camera_id}
+                </button>
+              ))}
+              <button
+                onClick={() => mapRef.current?.fit()}
+                className="ml-2 text-[10px] text-tac-text-muted hover:text-white font-mono px-2 py-0.5 border-l border-tac-border"
+              >
+                Fit All
+              </button>
             </div>
-
-            {/* Selected Camera OCR overlay */}
-            {selectedCamera ? (
-              <div className="absolute inset-x-4 bottom-4 z-20 max-w-4xl mx-auto">
-                <OcrPanel
-                  cameraId={selectedCamera.camera_id}
-                  cameraName={selectedCamera.name}
-                  events={events}
-                  onClose={() => setSelected(null)}
-                />
-              </div>
-            ) : null}
 
             {mapError ? (
               <p className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 text-xs text-tac-red bg-black/80 px-4 py-1 rounded">
