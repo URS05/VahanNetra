@@ -1,0 +1,217 @@
+[
+  {
+    "event_id": "stills-CAM01",
+    "plate_text": "TS09EG6531",
+    "plate_confidence": 0.9887,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "TS09EG6531",
+        "conf": 0.9887
+      },
+      {
+        "frame_idx": 0,
+        "text": "SO9EG653",
+        "conf": 0.9926
+      }
+    ],
+    "camera_id": "CAM01",
+    "timestamp": "2026-10-09T10:16:42Z",
+    "direction": "SE",
+    "lane": 1,
+    "vehicle_type": "car",
+    "vehicle_color": "silver",
+    "speed_estimate": null,
+    "plate_image_ref": "data/images/CAM01.png",
+    "source": "real_clip"
+  },
+  {
+    "event_id": "stills-CAM02",
+    "plate_text": "AP28AS1318",
+    "plate_confidence": 0.5703,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "",
+        "conf": 0.0
+      },
+      {
+        "frame_idx": 1,
+        "text": "",
+        "conf": 0.0
+      },
+      {
+        "frame_idx": 2,
+        "text": "",
+        "conf": 0.0
+      },
+      {
+        "frame_idx": 0,
+        "text": "SIEEO",
+        "conf": 0.5077
+      },
+      {
+        "frame_idx": 0,
+        "text": "MOM",
+        "conf": 0.7068
+      },
+      {
+        "frame_idx": 0,
+        "text": "3792774031",
+        "conf": 0.5703
+      }
+    ],
+    "camera_id": "CAM02",
+    "timestamp": "2026-10-09T10:16:43Z",
+    "direction": "S",
+    "lane": 1,
+    "vehicle_type": "car",
+    "vehicle_color": "silver",
+    "speed_estimate": null,
+    "plate_image_ref": "data/images/CAM02.png",
+    "source": "real_clip"
+  },
+  {
+    "event_id": "stills-CAM03",
+    "plate_text": "AP10AR0658",
+    "plate_confidence": 0.971,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "",
+        "conf": 0.0
+      },
+      {
+        "frame_idx": 0,
+        "text": "NONTRANSPORT",
+        "conf": 0.9572
+      },
+      {
+        "frame_idx": 0,
+        "text": "ICHER",
+        "conf": 0.9124
+      },
+      {
+        "frame_idx": 0,
+        "text": "IPQ",
+        "conf": 0.5698
+      },
+      {
+        "frame_idx": 0,
+        "text": "N7704",
+        "conf": 0.8645
+      },
+      {
+        "frame_idx": 0,
+        "text": "P12N7704",
+        "conf": 0.9209
+      },
+      {
+        "frame_idx": 0,
+        "text": "AP10AR0658",
+        "conf": 0.971
+      },
+      {
+        "frame_idx": 0,
+        "text": "HOARO6",
+        "conf": 0.9173
+      }
+    ],
+    "camera_id": "CAM03",
+    "timestamp": "2026-10-09T10:16:44Z",
+    "direction": "W",
+    "lane": 1,
+    "vehicle_type": "car",
+    "vehicle_color": "red",
+    "speed_estimate": null,
+    "plate_image_ref": "data/images/CAM03.png",
+    "source": "real_clip"
+  },
+  {
+    "event_id": "stills-CAM04",
+    "plate_text": "HR3870965",
+    "plate_confidence": 0.8733,
+    "format_valid": false,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "",
+        "conf": 0.0
+      },
+      {
+        "frame_idx": 1,
+        "text": "",
+        "conf": 0.0
+      },
+      {
+        "frame_idx": 0,
+        "text": "ENTRY",
+        "conf": 0.9963
+      },
+      {
+        "frame_idx": 0,
+        "text": "RFID",
+        "conf": 0.9875
+      },
+      {
+        "frame_idx": 0,
+        "text": "R",
+        "conf": 0.995
+      },
+      {
+        "frame_idx": 0,
+        "text": "STICKER",
+        "conf": 0.9728
+      },
+      {
+        "frame_idx": 0,
+        "text": "HR3870965",
+        "conf": 0.8733
+      }
+    ],
+    "camera_id": "CAM04",
+    "timestamp": "2026-10-09T10:16:45Z",
+    "direction": "SW",
+    "lane": 1,
+    "vehicle_type": "car",
+    "vehicle_color": "white",
+    "speed_estimate": null,
+    "plate_image_ref": "data/images/CAM04.png",
+    "source": "real_clip"
+  },
+  {
+    "event_id": "stills-CAM05",
+    "plate_text": "AP21AX369",
+    "plate_confidence": 0.9946,
+    "format_valid": true,
+    "raw_reads": [
+      {
+        "frame_idx": 0,
+        "text": "",
+        "conf": 0.0
+      },
+      {
+        "frame_idx": 1,
+        "text": "",
+        "conf": 0.0
+      },
+      {
+        "frame_idx": 0,
+        "text": "AP21AX369",
+        "conf": 0.9946
+      }
+    ],
+    "camera_id": "CAM05",
+    "timestamp": "2026-10-09T10:16:46Z",
+    "direction": "S",
+    "lane": 1,
+    "vehicle_type": "car",
+    "vehicle_color": "white",
+    "speed_estimate": null,
+    "plate_image_ref": "data/images/CAM05.png",
+    "source": "real_clip"
+  }
+]

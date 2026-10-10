@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VahanNetraEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "plate_text",
+    "plate_confidence",
+    "format_valid",
+    "raw_reads",
+    "camera_id",
+    "timestamp",
+    "direction",
+    "lane",
+    "vehicle_type",
+    "vehicle_color",
+    "speed_estimate",
+    "plate_image_ref",
+    "source"
+  ],
+  "properties": {
+    "event_id": { "type": "string" },
+    "plate_text": { "type": "string", "description": "Final voted plate, uppercase, no spaces" },
+    "plate_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "format_valid": { "type": "boolean" },
+    "raw_reads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["frame_idx", "text", "conf"],
+        "properties": {
+          "frame_idx": { "type": "integer" },
+          "text": { "type": "string" },
+          "conf": { "type": "number" }
+        }
+      }
+    },
+    "camera_id": { "type": "string" },
+    "timestamp": { "type": "string", "description": "ISO 8601 UTC" },
+    "direction": {
+      "type": "string",
+      "enum": ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "IN", "OUT"]
+    },
+    "lane": { "type": "integer" },
+    "vehicle_type": {
+      "type": "string",
+      "enum": ["car", "bike", "truck", "bus", "auto", "other"]
+    },
+    "vehicle_color": { "type": "string" },
+    "speed_estimate": { "type": ["number", "null"] },
+    "plate_image_ref": { "type": "string" },
+    "source": { "type": "string", "enum": ["real_clip", "simulated", "synthetic"] }
+  }
+}
