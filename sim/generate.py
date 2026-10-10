@@ -32,10 +32,14 @@ def _day() -> datetime:
 
 
 def _stamp(rng: random.Random) -> datetime:
+    """Return a timestamp within the past 7 days, biased to IST rush hours."""
     hour = pick_hour_ist(rng)
+    # Spread events over 7 days ending today for richer analytics
+    day_offset = rng.randint(-6, 0)
     return (
         _day()
         + timedelta(
+            days=day_offset,
             hours=hour,
             minutes=rng.randint(0, 59),
             seconds=rng.randint(0, 59),

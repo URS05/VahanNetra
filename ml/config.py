@@ -10,8 +10,12 @@ CONTRACTS = ROOT / "contracts"
 CAMERAS_JSON = CONTRACTS / "cameras.json"
 EVENT_SCHEMA = CONTRACTS / "event_schema.json"
 VIDEOS_DIR = ROOT / "data" / "videos"
+IMAGES_DIR = ROOT / "data" / "images"
 CROPS_DIR = ROOT / "data" / "crops"
 EVENTS_JSONL = ROOT / "data" / "events.jsonl"
+STILLS_JSONL = ML_DIR / "out" / "stills.jsonl"
+LABELS_CSV = IMAGES_DIR / "labels.csv"
+OCR_RESULTS_MD = IMAGES_DIR / "ocr_results.md"
 MODELS_DIR = ML_DIR / "models"
 BENCHMARK_OUT = ML_DIR / "benchmark_last.json"
 
@@ -60,6 +64,13 @@ OCR_USE_GPU = True
 # Consensus
 MIN_PLATE_LEN = 6
 MAX_PLATE_LEN = 13
+# Indian state and UT registration prefixes. Used only to rank real OCR reads,
+# never to rewrite or invent a plate.
+STATE_CODES = (
+    "AP", "TS", "TG", "HR", "KA", "TN", "KL", "MH", "GJ", "RJ", "UP", "MP",
+    "WB", "OD", "BR", "JH", "CG", "UK", "HP", "PB", "GA", "AS", "TR", "MN",
+    "ML", "MZ", "NL", "AR", "SK", "DL", "CH", "PY", "AN", "LA", "LD", "DN",
+)
 CONFUSABLE = {
     "O": "0",
     "I": "1",

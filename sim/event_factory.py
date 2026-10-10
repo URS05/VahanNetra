@@ -18,13 +18,13 @@ from config import (
     LAT_MIN,
     LON_MAX,
     LON_MIN,
-    PLATE_DISTRICTS,
     PLATE_LETTERS,
-    PLATE_STATES,
+    PLATE_STATE_WEIGHTS,
     RUSH_HOURS_IST,
     RUSH_SPEED_SCALE,
     RUSH_VOLUME_WEIGHT,
     SPEED_RANGE,
+    STATE_DISTRICTS,
     VEHICLE_TYPES,
     VEHICLE_WEIGHTS,
     VIRTUAL_CAMERA_COUNT,
@@ -65,8 +65,11 @@ def format_valid_plate(text: str) -> bool:
 
 
 def make_plate(rng: random.Random) -> str:
-    state = rng.choice(PLATE_STATES)
-    dist = rng.choice(PLATE_DISTRICTS)
+    """Generate a realistic Indian vehicle plate matching the Hyderabad traffic mix."""
+    states = list(PLATE_STATE_WEIGHTS.keys())
+    weights = list(PLATE_STATE_WEIGHTS.values())
+    state = rng.choices(states, weights=weights, k=1)[0]
+    dist = rng.choice(STATE_DISTRICTS[state])
     n_letters = 2 if rng.random() > 0.08 else 1
     letters = "".join(rng.choice(PLATE_LETTERS) for _ in range(n_letters))
     num = rng.randint(1, 9999)

@@ -80,6 +80,10 @@ Five sites on the Hitech City to Financial District corridor. Coordinates were s
 
 Simulate a trip: `POST /api/simulate` (presets: `normal_trip`, `cloned_plate`, `fuzzy_plate`, `watchlist_hit`).
 
+## Stills demo
+
+The current judge view uses five still images in `data/images/` (CAM01.png through CAM05.png), not video. `ml/run_images.py` OCRs each still, writes `ml/out/stills.jsonl`, and POSTs one `real_clip` event per camera. Open http://127.0.0.1:5173/demo to see each input image beside that camera's OCR output from GET /api/events.
+
 ## Next
 
 1. Finish and test backend simulate + cache-first routing.

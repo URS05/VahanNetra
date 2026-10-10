@@ -1,0 +1,6 @@
+image,camera_id,plate_text,condition,label_verified
+CAM01.png,CAM01,TS09EG6531,day,false
+CAM02.png,CAM02,AP28AS1318,blur,false
+CAM03.png,CAM03,AP10AR0658,day,false
+CAM04.png,CAM04,HR38V6965,angle,false
+CAM05.png,CAM05,AP21AX369,blur,false

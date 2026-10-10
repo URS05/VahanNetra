@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import argparse
+import random
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -17,6 +19,7 @@ from config import (
     WATCHLIST_NOTE,
     WATCHLIST_PLATE,
 )
+from event_factory import load_demo_cameras, make_event, make_plate, parse_utc
 from generate import generate_events, post_events
 from http_util import login, request_json
 from scenarios import (
@@ -105,7 +108,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Seed a repeatable VahanNetra demo")
     parser.add_argument("--base", default=DEFAULT_BASE)
     parser.add_argument("--wipe", action="store_true", help="Delete local SQLite files")
-    parser.add_argument("--synthetic", type=int, default=2500, help="Synthetic events to POST")
+    # 500 events is enough for a fast, rich demo (heatmap + OD + congestion)
+    parser.add_argument("--synthetic", type=int, default=500, help="Synthetic events to POST")
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
     parser.add_argument("--skip-post", action="store_true", help="Only write files")
     args = parser.parse_args()
@@ -148,7 +152,40 @@ def main() -> int:
     inject_scenario(args.base, token, "cloned_plate", scenario_cloned_plate())
     inject_scenario(args.base, token, "watchlist_hit", scenario_watchlist_hit())
     inject_scenario(args.base, token, "circling", scenario_circling())
-    print("fuzzy_plate reuses HERO_PLATE from normal_trip. Search TS09VN2613.")
+    print(f"fuzzy_plate reuses HERO_PLATE from normal_trip. Search '{__import__('config').FUZZY_QUERY}'.")
+
+    # Live heatmap events: 20 events timestamped within the last 8 minutes.
+    # The heatmap endpoint queries events within 10 minutes of NOW, so without
+    # these the heatmap would be empty right after seeding.
+    print("Posting 20 live heatmap events (within last 8 minutes)...")
+    rng_live = random.Random(args.seed + 9999)
+    cameras = load_demo_cameras()
+    camera_weights = [30, 25, 20, 15, 10]  # CAM01-CAM05 traffic weighting
+    now_utc = datetime.now(timezone.utc)
+    live_events = []
+    for i in range(20):
+        offset_s = rng_live.uniform(30, 480)  # 30 sec to 8 min ago
+        ts = now_utc - timedelta(seconds=offset_s)
+        cam = rng_live.choices(cameras, weights=camera_weights, k=1)[0]
+        plate = make_plate(rng_live)
+        ev = make_event(
+            event_id=f"live-heatmap-{i+1:02d}",
+            plate_text=plate,
+            camera=cam,
+            timestamp=ts,
+            rng=rng_live,
+            source="synthetic",
+        )
+        live_events.append(ev)
+    code_live, _ = request_json(
+        "POST",
+        f"{args.base.rstrip('/')}/api/events",
+        {"events": live_events},
+        token=token,
+        timeout=60.0,
+    )
+    print(f"live heatmap events: HTTP {code_live}")
+
     print("seed_demo done")
     return 0
 
